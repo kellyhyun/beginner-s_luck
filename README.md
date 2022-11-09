@@ -1,6 +1,6 @@
 # G06: Beginner's luck
 # Final Project: <Title>
-## Members: 
+## Members
   Lawrence Chung, Christopher Hong, Kelly Hyun, Paul Kim
 
 ## Overview
