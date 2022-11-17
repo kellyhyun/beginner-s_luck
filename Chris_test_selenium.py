@@ -29,12 +29,12 @@ import pandas as pd
 # ----------------------    WEB SCRAPING    -------------------------
 # imdb url
 url= 'https://www.imdb.com/feature/genre/?ref_=nv_ch_gr'
-options = Options()
-options.add_experimental_option("detach", True)
 s = Service("/Users/Christopher/Desktop/ME396P/beginner-s_luck/chromedriver")
-
+options = Options()
+# --------- window stays open when code runs
+options.add_experimental_option("detach", True)
+# --------- window doesn't pop up when code runs
 # options.add_argument("--headless")
-# driver = webdriver.Chrome(service=s, options=options)
 
 
 
@@ -66,17 +66,20 @@ def scrape_movie_info(movie_name):
     print(f"Summary: {movie_summary}")
 
     # ----------------  GETTING TRAILER LINK --------------
-    trailer_link = ''
+    trailer_html = ''
 
     try:
-        trailer_link = driver.find_element(By.XPATH, '//*[@id="imdbnext-vp-jw-inline"]/div[2]/div[4]/video')
-    except NoSuchElementException:
-        trailer_link = driver.find_element(By.XPATH, '//*[@id="__next"]/main/div/section[1]/div/section/div/div[1]/section[2]/div[2]/div[2]/div[1]/div[1]/a' )
-        # print("There's no existing trailer for this movie/show on IMDB!")
+        trailer_html = driver.find_element(By.XPATH, '//*[@id="imdbnext-vp-jw-inline"]/div[2]/div[4]/video')
+        trailer_link = trailer_html.get_attribute('src')
 
-    if trailer_link != '':
-        src = trailer_link.get_attribute('src')
-        print(src)
+    except NoSuchElementException:
+        trailer_html = driver.find_element(By.XPATH, '//*[@id="__next"]/main/div/section[1]/div/section/div/div[1]/section[2]/div[2]/div[2]/div[1]/div[1]/a')
+        trailer_link = trailer_html.get_attribute('href')
+    print(trailer_link)
+
+    if trailer_link == '':
+        print("There's no existing trailer for this movie/show on IMDB!")
+
 
     # # webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open(src,new=0, autoraise=True)
     # # webbrowser.open_new(src)
