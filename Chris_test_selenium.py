@@ -29,7 +29,7 @@ import pandas as pd
 # ----------------------    WEB SCRAPING    -------------------------
 # imdb url
 url= 'https://www.imdb.com/feature/genre/?ref_=nv_ch_gr'
-s = Service("/Users/Christopher/Desktop/ME396P/beginner-s_luck/chromedriver")
+s = Service("/Users/Christopher/Desktop/ME396P/chromedriver")
 options = Options()
 # --------- window stays open when code runs
 options.add_experimental_option("detach", True)
