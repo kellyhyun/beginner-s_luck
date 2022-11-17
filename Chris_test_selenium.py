@@ -9,6 +9,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+# from webdriver_manager.chrome import ChromeDriverManager
 import time
 import pandas as pd
 # ---------------------     DATABASE STUFF  ------------------------
@@ -27,10 +29,18 @@ import pandas as pd
 # ----------------------    WEB SCRAPING    -------------------------
 # imdb url
 url= 'https://www.imdb.com/feature/genre/?ref_=nv_ch_gr'
-driver = webdriver.Chrome(executable_path="/Users/Christopher/Desktop/ME396P/beginner-s_luck-main/chromedriver")
+options = Options()
+options.add_experimental_option("detach", True)
+s = Service("/Users/Christopher/Desktop/ME396P/beginner-s_luck/chromedriver")
 
-# function to navigate to movie info page and scrape information
+# options.add_argument("--headless")
+# driver = webdriver.Chrome(service=s, options=options)
+
+
+
+# --------------------  GETTING MOVIE INFO -----------------
 def scrape_movie_info(movie_name):
+    driver = webdriver.Chrome(service=s, options=options)
     driver.get("https://www.imdb.com/find?q=" + movie_name + "&ref_=nv_sr_sm")
 
     # Assumption: The movie we're looking for is the first result that comes up
@@ -55,9 +65,29 @@ def scrape_movie_info(movie_name):
     movie_summary = soup.select(".gXUyNh")[0].get_text()
     print(f"Summary: {movie_summary}")
 
+    # ----------------  GETTING TRAILER LINK --------------
+    trailer_link = ''
 
-# Ask for movie input, search for it on imdb
-topic_search = input("Enter what movie to watch? ")
-topic_search2 = topic_search.replace(' ', '+')
-scrape_movie_info(topic_search2) 
+    try:
+        trailer_link = driver.find_element(By.XPATH, '//*[@id="imdbnext-vp-jw-inline"]/div[2]/div[4]/video')
+    except NoSuchElementException:
+        trailer_link = driver.find_element(By.XPATH, '//*[@id="__next"]/main/div/section[1]/div/section/div/div[1]/section[2]/div[2]/div[2]/div[1]/div[1]/a' )
+        # print("There's no existing trailer for this movie/show on IMDB!")
 
+    if trailer_link != '':
+        src = trailer_link.get_attribute('src')
+        print(src)
+
+    # # webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open(src,new=0, autoraise=True)
+    # # webbrowser.open_new(src)
+    # driver2 = webdriver.Chrome(service=s)
+    # driver2.get(src)
+    #
+    # # Ask for movie input, search for it on imdb
+    # topic_search = input("Enter what movie to watch? ")
+    # topic_search2 = topic_search.replace(' ', '+')
+    # scrape_movie_info(topic_search2)
+
+if __name__ == '__main__':
+    search_movie = input("What movie would you like to watch?")
+    scrape_movie_info(search_movie)
