@@ -22,7 +22,5 @@ newDF = df.merge(crew, left_on='tconst', right_on='tconst')
 
 newnewDF = newDF.merge(principals, left_on='tconst', right_on='tconst')
 
-filepath = Path(r'C:\Users\kelly\OneDrive\Documents\homework\!Fall 2023\ME396P-Proj\database2.csv')  
-filepath.parent.mkdir(parents=True, exist_ok=True)  
-newnewDF.to_csv(filepath) 
+newnewDF.to_csv('database2.csv') 
 

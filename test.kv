@@ -1,62 +1,87 @@
-#:import utils kivy.utils
+WindowManager:
+    MainWindow:
+    SecondWindow:
+    ThirdWindow:
+    FourthWindow:
+
+<MainWindow>:
+    name: "main"
+
+    GridLayout:
+        cols:1
+
+        Label:
+            text: "Choose what movie to watch"
+
+        Button:
+            text: "Set your preferences."
+            on_release:
+                app.root.current = "input" 
+                root.manager.transition.direction = "left"
+        Button:
+            text: "Set the Importance of your preferences."
+            on_release:
+                app.root.current = "light" 
+                root.manager.transition.direction = "left"
+        Button:
+            text: "Results from set inputs."
+            on_release:
+                app.root.current = "record" 
+                root.manager.transition.direction = "left"
 
 
-<RootWidget>:
-    orientation: "vertical"
-    layout: glayout
-
-    ScrollView:
-        GridLayout
-            id: glayout
-            cols:1
-            row_default_height: 100
-            size_hint_y: None
-            height: self.minimum_height  
-    
-    Label:
-        text: 'What would you like as your runtime?'
-        background_color: utils.get_color_from_hex('#48A9A6')
-    
-    TextInput:
-        id:input
-        hint_text:'Enter runtime'
-        pos_hint: {'center_x': 0.5, 'center_y': 0.705}
-        size_hint: 0.95, 0.5
-        on_text: app.process()
+<SecondWindow>:
+    name: "input"
+    GridLayout:
+        cols: 1
+        Label:
+            text:"How much time do you have?"
         
-    Label:
-        text: 'What is your most important preference?'
-        background_color: utils.get_color_from_hex('#48A9A6')
+        TextInput:
+            text: ""
+        
+        Label:
+            text: "What genre would you like?"
+        
+        ToggleButton:
+            text: "Horror"
+        
+        ToggleButton:
+            text: "Drama"
+        
+        ToggleButton:
+            text: "Animation"
+        
+        Label:
+            text: "Minimum Rating"
+                
+        
+                
+        Button:
+            text: "Back"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+        
+<ThirdWindow>:
+    name: "light"
+    GridLayout:
+        cols:1
+        
+        Button:
+            text: "Back"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+  
 
-    Button:
-        text: 'Hot Cross Buns'
-        background_color: utils.get_color_from_hex('#48A9A6')
-        on_press: root.play2() 
-       
-    Label:
-        text: 'Please choose a song to light up and follow along.'
-        background_color: utils.get_color_from_hex('#48A9A6')
-    
-    Button:
-        text: 'Twinkle Twinkle Little Star'
-        background_color: utils.get_color_from_hex('#48A9A6')
-        on_press: root.play2()
-    
-    Button:
-        text: 'Hot Cross Buns'
-        background_color: utils.get_color_from_hex('#48A9A6')
-        on_press: root.play2()
-   
-    Label:
-        text: 'Record youself!'
-        background_color: utils.get_color_from_hex('#48A9A6')
-   
-    Button:
-        text: 'Record yourself first'
-        background_color: utils.get_color_from_hex('#48A9A6')
-        on_press: root.play2()
-       
-    Button:
-        text: 'Play your recording.'
-        background_color: utils.get_color_from_hex('#48A9A6')
-        on_press: root.play2()
+<FourthWindow>:
+    name: "record"
+    GridLayout:
+        cols:1
+        
+        Button:
+            text: "Back"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
