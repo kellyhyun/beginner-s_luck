@@ -11,6 +11,9 @@ import pandas as pd
 # assumed that GUI inputs will output a dictionary with set attributes
 df = pd.read_csv('FinalDatabase.csv', sep=',', header=0, low_memory = False)
 
+
+
+
 df["category"] = df["category"].str.replace("[' ]","")
 df['category'] = df.category.apply(lambda x: x[1:-1].split(','))
 
