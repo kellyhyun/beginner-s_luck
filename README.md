@@ -48,19 +48,22 @@ From now on, you'll always be able to satisfyingly finish a movie before you hav
 ### Preference Structuring
 Generating movies for the user comes down to user's choice on what attribute he/she would prefer more. To establish such preferences, the schematic below shows how the code is structured:
 ```
-######Setting precedence:
+Setting precedence:
+
 1st choice → Multiply the factor by 3
 2nd choice → Multiply the factor by 2
 3rd choice → Multiply the factor by 1
 
-######Genre:
+Genre:
+
 Total = len(choice_list)
 If chosen movie has all choices:
   Weight of each genre = 1
 Else:
   Weight =  # of genres desired by user that movie also has / Total
 
-######Year:
+Year:
+
 If the chosen year is within range:
   Weight = 1 
 Else:
@@ -69,7 +72,8 @@ Else:
   Weight = 1 - ( abs(Movie_year - Mean_range) / 107 )
     Where, max difference allowed for movies in years = 107. 
     
-#######Rating: 
+Rating: 
+
 If the chosen rating is within range:
   Weight = 1 
 Else:
@@ -78,5 +82,7 @@ Else:
   Weight = 1 - ( abs(Movie_rating - Mean_rating) / 10 )
     Where, max difference allowed for movies in rating = 10. 
 ```    
+Once the precedence is set, the list of movies suggested should follow the structure above and output them in a correct order.
+
 ### Additional Preferences
 
