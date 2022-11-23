@@ -36,7 +36,6 @@ class SecondWindow(Screen):
         if len(self.errorList) == 0:
             dictionaryPreferences["valid"] = True
             string = "All user inputs have been saved."
-            # string = string + ("\n{}".format(dictionaryPreferences))
         else:
             dictionaryPreferences = {"valid": False,"maxtime": "", "mintime":"", "genres":[], "minyear":"", "maxyear": "", "maxrating":"", "minrating":""}
             string = "Please fix all of the following and save again:\n"
@@ -161,10 +160,14 @@ class SecondWindow(Screen):
     def returnBoolPref(self):
         global dictionaryPreferences
         return dictionaryPreferences["valid"]
+
+    def returnBoolImport(self):
+        global preferencesImportance
+        return preferencesImportance["valid"]
     
     def popup2(self):
         layout = GridLayout(cols = 1, padding = 10)
-        popupLabel = Label(text = "Check user inputs before continuing.")
+        popupLabel = Label(text = "Check and save user inputs before continuing.")
         closeButton = Button(text = "Close")
         layout.add_widget(popupLabel)
         layout.add_widget(closeButton)  
@@ -235,11 +238,12 @@ class ThirdWindow(Screen):
         global preferencesImportance
         impor = preferencesImportance["valid"]
         if not impor:
-            string = "Check importance of preferences before continuing."
+            string = "Check importance of preferences and save before continuing."
         if not pref:
-            string = "Check user preferences before continuing."
+            string = "Check user preferences and save before continuing."
         if not impor and not pref:
-            string = "Check both user preference and importance of preferences before continuing."
+            string = "Check both user preference and importance of preferences and save before continuing."
+            
         popupLabel = Label(text = string)
         closeButton = Button(text = "Close")
         layout.add_widget(popupLabel)
@@ -269,13 +273,32 @@ class ThirdWindow(Screen):
         return screenName
     
 class FourthWindow(Screen): 
+    df = pd.read_csv('FinalDatabase.csv', sep=',', header=0, low_memory = False)
+    df['runtimeMinutes'] = pd.to_numeric(df['runtimeMinutes'])
+    df['numVotes'] = pd.to_numeric(df['numVotes'])
+    df["category"] = df["category"].str.replace("[' ]","")
+    df['category'] = df.category.apply(lambda x: x[1:-1].split(','))
+    df["primaryName"] = df["primaryName"].str.replace("[' ]","")
+    df['primaryName'] = df.primaryName.apply(lambda x: x[1:-1].split(','))
+    df['runtimeMinutes'] = pd.to_numeric(df['runtimeMinutes'])
+    df['numVotes'] = pd.to_numeric(df['numVotes'])
+    
+    def sortGenre (self):
+        global dictionaryPreferences
+        self.df['genres'] = self.df['genres'].str.lower()
+        for i in dictionaryPreferences['genres']:
+            self.df = self.df.loc[self.df['genres'].str.contains(i)] 
+    
+    def sortYear (self):
+        pass
+    
+    def sortRating (self):
+        pass
+    
     def returnBack(self):
         global screenName
         return screenName
     
-class FifthWindow(Screen):
-    
-    pass
 
 class WindowManager(ScreenManager):
     pass

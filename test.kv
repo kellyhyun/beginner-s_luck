@@ -64,7 +64,6 @@ WindowManager:
 
 <SecondWindow>:
     name: "input"
-<<<<<<< HEAD
     FloatLayout:
         GridLayout:
             size_hint: .9, 0.15
@@ -89,37 +88,6 @@ WindowManager:
             
             Label:
                 text: "What genre would you like? (for best results, choose 1 - 2)"
-=======
-    GridLayout:
-        cols: 1
-        Label:
-            text:"How much time do you have (in minutes)?"
-        
-        TextInput:
-            text: ""
-        
-        Label:
-            text: "What genre would you like?"
-        
-        ToggleButton:
-            text: "Horror"
-        
-        ToggleButton:
-            text: "Action"
-        
-        ToggleButton:
-            text: "Comedy"
-
-        ToggleButton:
-            text: "Sci-Fi"
-        
-        Label:
-            text: "Minimum Rating"
-
-        TextInput:
-            text: ""
-
->>>>>>> c5a992bb666d504bf81c4d1a0250abefb976f06a
                 
         GridLayout:
             id: genrecontainer
@@ -275,7 +243,7 @@ WindowManager:
             Button:
                 text: "Next"
                 on_release:
-                    move = (root.returnBoolPref() and root.returnBoolImport())
+                    move = (root.returnBoolPref())
                     print(move)
                     if move: \
                     root.setBack("input") 
@@ -401,7 +369,7 @@ WindowManager:
             Button:
                 text: "Next"
                 on_release:
-                    move = root.returnBoolPref()
+                    move = (root.returnBoolPref() and root.returnBoolImport())
                     print(move)
                     if move: \
                     root.setBack("importance") 
