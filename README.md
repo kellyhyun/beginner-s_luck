@@ -12,8 +12,10 @@ Using packages such as [Selenium]([url](https://www.selenium.dev/)) and [Beautif
 
 ### Selenium
 Selenium is a web scraping package that is most commonly used in complex projects. In our project, we use Selenium to navigate through iMDB websites. In more detail, we use Selenium to automate the searching and clicking actions.
+
 NOTE: In order to utilize Selenium, user needs to download Chromedriver in order to run the codes related to Selenium.
 When downloading the driver, make sure to download the correct version corresponding to your chrome.
+
 The link to download Chromedriver can be found here: https://chromedriver.chromium.org/downloads
 
 ### BeautifulSoup4
