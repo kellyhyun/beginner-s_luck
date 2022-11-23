@@ -47,7 +47,7 @@ From now on, you'll always be able to satisfyingly finish a movie before you hav
 
 ### Preference Structuring
 Generating movies for the user comes down to user's choice on what attribute he/she would prefer more. To establish such preferences, the schematic below shows how the code is structured:
-
+```
 Setting precedence:
 1st choice → Multiply the factor by 3
 2nd choice → Multiply the factor by 2
@@ -77,6 +77,6 @@ Else:
   Then
   Weight = 1 - ( abs(Movie_rating - Mean_rating) / 10 )
     Where, max difference allowed for movies in rating = 10. 
-    
+```    
 ### Additional Preferences
 
