@@ -61,7 +61,7 @@ def scrape_movie_info(movie_name):
     except NoSuchElementException:
         trailer_html = driver.find_element(By.XPATH, '//*[@id="__next"]/main/div/section[1]/div/section/div/div[1]/section[2]/div[2]/div[2]/div[1]/div[1]/a')
         trailer_link = trailer_html.get_attribute('href')
-    print(f"Trailer link: trailer_link")
+    print(f"Trailer link: {trailer_link}")
 
     if trailer_link == '':
         print("There's no existing trailer for this movie/show on IMDB!")
@@ -73,7 +73,7 @@ def scrape_movies_list(movie_names_list):
 
 if __name__ == '__main__':
     list_of_movies = []
-    search_movie = input("What movie would you like information about?")
+    search_movie = input("What movie would you like information about? ")
     list_of_movies.append(search_movie)
     done = False
     while not done:
@@ -81,7 +81,7 @@ if __name__ == '__main__':
         if keep_going == 'n':
             done = True
         if keep_going == 'y':
-            search_movie = input("What movie would you like information about?")
+            search_movie = input("What movie would you like information about? ")
             list_of_movies.append(search_movie)
     print(list_of_movies)
     scrape_movies_list(list_of_movies)
