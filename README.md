@@ -44,5 +44,39 @@ Summary
 
 ### Runtime?
 From now on, you'll always be able to satisfyingly finish a movie before you have to head out. Simply input how much time you have, we'll find a few good ones you could squeeze in that time frame.
+
+### Preference Structuring
+Generating movies for the user comes down to user's choice on what attribute he/she would prefer more. To establish such preferences, the schematic below shows how the code is structured:
+
+Setting precedence:
+1st choice → Multiply the factor by 3
+2nd choice → Multiply the factor by 2
+3rd choice → Multiply the factor by 1
+
+Genre:
+Total = len(choice_list)
+If chosen movie has all choices:
+  Weight of each genre = 1
+Else:
+  Weight =  # of genres desired by user that movie also has / Total
+
+Year:
+If the chosen year is within range:
+  Weight = 1 
+Else:
+  Mean_range = ( (max_range + min_range) / 2 )
+  Then
+  Weight = 1 - ( abs(Movie_year - Mean_range) / 107 )
+    Where, max difference allowed for movies in years = 107. 
+    
+Rating: 
+If the chosen rating is within range:
+  Weight = 1 
+Else:
+  Mean_rating = ( (max_rating + min_rating) / 2 )
+  Then
+  Weight = 1 - ( abs(Movie_rating - Mean_rating) / 10 )
+    Where, max difference allowed for movies in rating = 10. 
+    
 ### Additional Preferences
 
