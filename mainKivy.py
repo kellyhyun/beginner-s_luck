@@ -16,6 +16,7 @@ global dictionaryPreferences
 dictionaryPreferences = {"valid": False,"maxtime": "", "mintime":"", "genres":[], "minyear":"", "maxyear": "", "maxrating":"", "minrating":""}
 global preferencesImportance
 preferencesImportance = {1:"", 2:"", 3:"", "valid":False}
+
 Window.maximize()
 
 class MainWindow(Screen):

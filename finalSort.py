@@ -29,10 +29,10 @@ def sortTime (newdf, dictionaryPreferences):
     
     for index, row in newdf.iterrows():
         if mintime <= row["runtimeMinutes"] <= maxtime:
-            row["weight"] = 10
+            row["weight"] = 200
         else:
             average = (mintime + maxtime)/2
-            row["weight"] = 1 - (abs(row["runtimeMinutes"]-average)/422)*10
+            row["weight"] = (1 - (abs(row["runtimeMinutes"]-average)/422))*200
         newdf.loc[index,"weight"] = newdf.loc[index,"weight"] + row["weight"]
     return newdf
 
@@ -57,7 +57,7 @@ def sortYear (weight, newdf, dictionaryPreferences):
             row["weight"] = weight
         else:
             average = (minyear + maxyear)/2
-            row["weight"] = 1 - (abs(row["startYear"]-average)/107)*weight
+            row["weight"] = (1 - (abs(row["startYear"]-average)/107))*weight
         newdf.loc[index,"weight"] = newdf.loc[index,"weight"] + row["weight"]
     return newdf
 
@@ -70,13 +70,14 @@ def sortRating (weight, newdf, dictionaryPreferences):
             row["weight"] = weight
         else:
             average = (minrating + maxrating)/2
-            row["weight"] = 1 - (abs(row["averageRating"]-average)/9.7)*weight
+            row["weight"] = (1 - (abs(row["averageRating"]-average)/9.7))*weight
         newdf.loc[index,"weight"] = newdf.loc[index,"weight"] + row["weight"]
     return newdf
 
 
 def combineSort(newdf, preferencesImportance, dictionaryPreferences):
     newdf = sortTime(newdf, dictionaryPreferences)
+    newdf = newdf.head(100)
     for rank in range(1,4):
         ranktoweight = {1:3, 2:2, 3:1}
         if preferencesImportance[rank] == "Genres":
@@ -104,11 +105,11 @@ def returnTopRefreshedMlist():
     global preferencesImportance
     global dictionaryPreferences
     df = initialize(dictionaryPreferences)
-    global refreshed
-    global top
-    global mList
     top, refreshed, mList = movieList(df, preferencesImportance, dictionaryPreferences)
     return top, refreshed, mList
+
+def returnLabelText(top):
+    return top.to_string()
 
 global dictionaryPreferences
 dictionaryPreferences = {"valid": False, "maxtime": 201, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
@@ -116,3 +117,4 @@ global preferencesImportance
 preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":False}
 
 topDF, refresheddf, mList = returnTopRefreshedMlist()
+print(returnLabelText(topDF))
