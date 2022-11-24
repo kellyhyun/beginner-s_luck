@@ -18,12 +18,26 @@ def initialize(dictionaryPreferences):
     df['startYear'] = pd.to_numeric(df['startYear'])
     df['numVotes'] = pd.to_numeric(df['numVotes'])
     df.insert(len(df.columns),"weight", 0)
-    df = df[dictionaryPreferences["mintime"] < df.runtimeMinutes < dictionaryPreferences["maxtime"]]
+    # mintime = dictionaryPreferences["mintime"]
+    # maxtime = dictionaryPreferences["maxtime"]
+    # df = df[(df["runtimeMinutes"] <= maxtime) & (df["runtimeMinutes"]>=mintime)]
     return df
+
+def sortTime (newdf, dictionaryPreferences):
+    maxtime = dictionaryPreferences['maxtime'] 
+    mintime = dictionaryPreferences['mintime']
+    
+    for index, row in newdf.iterrows():
+        if mintime <= row["runtimeMinutes"] <= maxtime:
+            row["weight"] = 10
+        else:
+            average = (mintime + maxtime)/2
+            row["weight"] = 1 - (abs(row["runtimeMinutes"]-average)/422)*10
+        newdf.loc[index,"weight"] = newdf.loc[index,"weight"] + row["weight"]
+    return newdf
 
 def sortGenre (weight, newdf, dictionaryPreferences):
     usergenre = dictionaryPreferences['genres'] 
-    
     newdf['genres'] = newdf.genres.apply(lambda x: x[0:].split(','))
     for index, row in newdf.iterrows():
         match = 0
@@ -43,7 +57,7 @@ def sortYear (weight, newdf, dictionaryPreferences):
             row["weight"] = weight
         else:
             average = (minyear + maxyear)/2
-            row["weight"] = 1 - (abs(row["startYear"]-average)/107)
+            row["weight"] = 1 - (abs(row["startYear"]-average)/107)*weight
         newdf.loc[index,"weight"] = newdf.loc[index,"weight"] + row["weight"]
     return newdf
 
@@ -56,12 +70,13 @@ def sortRating (weight, newdf, dictionaryPreferences):
             row["weight"] = weight
         else:
             average = (minrating + maxrating)/2
-            row["weight"] = 1 - (abs(row["averageRating"]-average)/9.7)
+            row["weight"] = 1 - (abs(row["averageRating"]-average)/9.7)*weight
         newdf.loc[index,"weight"] = newdf.loc[index,"weight"] + row["weight"]
     return newdf
 
 
 def combineSort(newdf, preferencesImportance, dictionaryPreferences):
+    newdf = sortTime(newdf, dictionaryPreferences)
     for rank in range(1,4):
         ranktoweight = {1:3, 2:2, 3:1}
         if preferencesImportance[rank] == "Genres":
@@ -85,9 +100,19 @@ def movieList (newdf, preferencesImportance, dictionaryPreferences):
     refreshed = newdf.iloc[10: , :]
     return top, refreshed, mList
 
-# global dictionaryPreferences
-# dictionaryPreferences = {"valid": False, "maxtime": 201, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
-# global preferencesImportance
-# preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":False}
-# df = initialize(dictionaryPreferences)
-# topDF, refresheddf, mList = movieList(df, preferencesImportance, dictionaryPreferences)
+def returnTopRefreshedMlist():
+    global preferencesImportance
+    global dictionaryPreferences
+    df = initialize(dictionaryPreferences)
+    global refreshed
+    global top
+    global mList
+    top, refreshed, mList = movieList(df, preferencesImportance, dictionaryPreferences)
+    return top, refreshed, mList
+
+global dictionaryPreferences
+dictionaryPreferences = {"valid": False, "maxtime": 201, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
+global preferencesImportance
+preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":False}
+
+topDF, refresheddf, mList = returnTopRefreshedMlist()

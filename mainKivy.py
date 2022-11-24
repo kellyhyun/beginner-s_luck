@@ -88,8 +88,8 @@ class SecondWindow(Screen):
             if isinstance(child, ToggleButton):
                 if child.state == "down":
                     self.choiceList.append(child.text)
-        if len(self.choiceList) == 0:
-            self.errorList.append("Choose at least one genre.")
+        if (len(self.choiceList) == 0) or (len(self.choiceList) > 3):
+            self.errorList.append("Choose 1-3 genres.")
         else:
             dictionaryPreferences["genres"] = self.choiceList
     
