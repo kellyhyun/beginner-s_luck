@@ -289,8 +289,11 @@ class FourthWindow(Screen):
         global refreshed
         global top
         global mList
-        df = finalSort.initialize(dictionaryPreferences)
-        top, refreshed, mList = finalSort.movieList(df, preferencesImportance, dictionaryPreferences)
+        try:
+            df = finalSort.initialize(dictionaryPreferences)
+            top, refreshed, mList = finalSort.movieList(df, preferencesImportance, dictionaryPreferences)
+        except:
+            print("error")
     
     def returnTopRefreshedMlist(self):
         global preferencesImportance
@@ -298,10 +301,10 @@ class FourthWindow(Screen):
         global refreshed
         global top
         global mList
-        if refreshed == pd.DataFrame():
-            print("nothing to refresh")
-        else:
+        try:
             top, refreshed, mList = finalSort.movieList(refreshed, preferencesImportance, dictionaryPreferences)
+        except:
+            print("error")
     
     def returnLabelText(self):
         global top

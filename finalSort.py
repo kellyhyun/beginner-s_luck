@@ -28,7 +28,6 @@ def sortTime (newdf, dictionaryPreferences):
     mintime = dictionaryPreferences['mintime']
     
     for index, row in newdf.iterrows():
-        row['runtimeMinutes'] = pd.to_numeric(row['runtimeMinutes'])
         if mintime <= row["runtimeMinutes"] <= maxtime:
             row["weight"] = 200
         else:
@@ -75,10 +74,14 @@ def sortRating (weight, newdf, dictionaryPreferences):
         newdf.loc[index,"weight"] = newdf.loc[index,"weight"] + row["weight"]
     return newdf
 
-
 def combineSort(newdf, preferencesImportance, dictionaryPreferences):
     newdf = sortTime(newdf, dictionaryPreferences)
+    newdf = newdf.sort_values(by=['weight'],ascending=False)
     newdf = newdf.head(100)
+    
+    global savethis
+    savethis = newdf
+    
     for rank in range(1,4):
         ranktoweight = {1:3, 2:2, 3:1}
         if preferencesImportance[rank] == "Genres":
@@ -113,7 +116,7 @@ def returnLabelText(top):
     return top.to_string()
 
 # global dictionaryPreferences
-# dictionaryPreferences = {"valid": False, "maxtime": 201, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
+# dictionaryPreferences = {"valid": False, "maxtime": 200, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
 # global preferencesImportance
 # preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":False}
 
