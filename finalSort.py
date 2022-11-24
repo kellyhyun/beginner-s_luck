@@ -18,6 +18,7 @@ def initialize(dictionaryPreferences):
     df['startYear'] = pd.to_numeric(df['startYear'])
     df['numVotes'] = pd.to_numeric(df['numVotes'])
     df.insert(len(df.columns),"weight", 0)
+    df['genres'] = df.genres.apply(lambda x: x[0:].split(','))
     # mintime = dictionaryPreferences["mintime"]
     # maxtime = dictionaryPreferences["maxtime"]
     # df = df[(df["runtimeMinutes"] <= maxtime) & (df["runtimeMinutes"]>=mintime)]
@@ -38,7 +39,7 @@ def sortTime (newdf, dictionaryPreferences):
 
 def sortGenre (weight, newdf, dictionaryPreferences):
     usergenre = dictionaryPreferences['genres'] 
-    newdf['genres'] = newdf.genres.apply(lambda x: x[0:].split(','))
+    
     for index, row in newdf.iterrows():
         match = 0
         for i in row["genres"]:
@@ -77,10 +78,7 @@ def sortRating (weight, newdf, dictionaryPreferences):
 def combineSort(newdf, preferencesImportance, dictionaryPreferences):
     newdf = sortTime(newdf, dictionaryPreferences)
     newdf = newdf.sort_values(by=['weight'],ascending=False)
-    newdf = newdf.head(100)
-    
-    global savethis
-    savethis = newdf
+    newdf = newdf.head(50)
     
     for rank in range(1,4):
         ranktoweight = {1:3, 2:2, 3:1}

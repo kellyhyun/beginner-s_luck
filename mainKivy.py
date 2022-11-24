@@ -282,6 +282,7 @@ class FourthWindow(Screen):
     refreshed = pd.DataFrame()
     top = pd.DataFrame()
     mList = []
+    count = 1
     
     def returnTopRefreshedMlist1(self):
         global preferencesImportance
@@ -289,27 +290,50 @@ class FourthWindow(Screen):
         global refreshed
         global top
         global mList
+        global og
         try:
             df = finalSort.initialize(dictionaryPreferences)
+            og = df
             top, refreshed, mList = finalSort.movieList(df, preferencesImportance, dictionaryPreferences)
         except:
             print("error")
     
-    def returnTopRefreshedMlist(self):
+    def repeathelper(self, nextdf):
         global preferencesImportance
         global dictionaryPreferences
         global refreshed
         global top
         global mList
         try:
-            top, refreshed, mList = finalSort.movieList(refreshed, preferencesImportance, dictionaryPreferences)
+            top, refreshed, mList = finalSort.movieList(nextdf, preferencesImportance, dictionaryPreferences)
         except:
             print("error")
     
+    def repeatRefresh(self):
+        global preferencesImportance
+        global dictionaryPreferences
+        global refreshed
+        global top
+        global mList
+        global og
+        new = refreshed.copy()
+        if self.count != 5:
+            self.repeathelper(new)
+            self.count += 1
+            self.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh four times to recieve more movie recommendations."
+        else:
+            self.repeathelper(og)
+            newtext = self.ids.statusLabel.text + "\nResults restarted."
+            self.ids.statusLabel.text = newtext
+            self.count = 1
+    
     def returnLabelText(self):
         global top
-        print(top.to_string())
-        self.ids.resultLabel.text = top.to_string()
+        global mList
+        print(mList)
+        self.ids.resultLabel.text = str(mList)
+        # print(top.to_string())
+        # self.ids.resultLabel.text = top.to_string()
         # labelText = ""
         # for i, r in top.iterrows():
         #     labelText.join(str(r))

@@ -38,22 +38,7 @@ WindowManager:
                 root.setBack("main")
                 app.root.current = "input" 
                 root.manager.transition.direction = "left"
-            
-        Label:
-            text: "" 
-            size_hint_y: .01
                 
-        Button:
-            text: "Set the importance of your preferences."
-            on_release:
-                root.setBack("main")
-                app.root.current = "importance" 
-                root.manager.transition.direction = "left"
-        
-        Label:
-            text: "" 
-            size_hint_y: .01
-            
         Button:
             text: "Results from previously set inputs."
             on_release:
@@ -392,8 +377,17 @@ WindowManager:
     name: "results"
     FloatLayout:
         GridLayout:
-            size_hint: 0.8, 0.65
+            size_hint: 0.8, 0.1
             pos_hint: {"center_x": 0.5, "top": .95}
+            cols:1
+            
+            Label:
+                id: statusLabel
+                text: "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh four times to recieve more movie recommendations."
+                
+        GridLayout:
+            size_hint: 0.8, 0.6
+            pos_hint: {"center_x": 0.5, "top": .8}
             cols:1
             
             Label:
@@ -414,8 +408,8 @@ WindowManager:
             Button:
                 text: "Refresh"
                 on_release:
-                    root.returnTopRefreshedMlist()
-                    root.returnLabelText() 
+                    root.repeatRefresh()
+                    root.returnLabelText()
             
             Button:
                 text: "Back"
