@@ -15,5 +15,4 @@ df = df.loc[(df["titleType"] == 'movie' )]
 print(df.head())
 df = df.drop(['Unnamed: 0.1', 'Unnamed: 0'], axis=1)
 
-
 df.to_csv('FinalDatabase-MovieOnly.csv')

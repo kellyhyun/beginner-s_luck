@@ -377,8 +377,6 @@ WindowManager:
                     app.root.current = "results" 
                     if move: \
                     root.manager.transition.direction = "left"
-                    if move: \
-                    root.returnTopRefreshedMlist()
                     else: \
                     root.popup2()
                     
@@ -394,21 +392,30 @@ WindowManager:
     name: "results"
     FloatLayout:
         GridLayout:
-            size_hint: 0.8, 0.85
+            size_hint: 0.8, 0.65
             pos_hint: {"center_x": 0.5, "top": .95}
             cols:1
             
             Label:
-                text: root.returnLabelText()
+                id: resultLabel
+                text: ""
         
         GridLayout:
             size_hint: 0.8, 0.08
-            pos_hint: {"center_x": 0.5, "top": 0.10}
+            pos_hint: {"center_x": 0.5, "top": 0.2}
             cols:3
             
             Button:
-                text: "Next"
-                on_release: 
+                text: "Load"
+                on_release:
+                    root.returnTopRefreshedMlist1()
+                    root.returnLabelText() 
+            
+            Button:
+                text: "Refresh"
+                on_release:
+                    root.returnTopRefreshedMlist()
+                    root.returnLabelText() 
             
             Button:
                 text: "Back"
@@ -417,6 +424,10 @@ WindowManager:
                     app.root.current = screen
                     root.manager.transition.direction = "right"
                     
+        GridLayout:
+            size_hint: 0.8, 0.08
+            pos_hint: {"center_x": 0.5, "top": 0.10}
+            cols: 1      
             Button:
                 text: "Main"
                 on_release:

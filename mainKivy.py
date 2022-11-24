@@ -13,7 +13,7 @@ from kivy.uix.button import Button
 import finalSort
 
 global dictionaryPreferences
-dictionaryPreferences = {"valid": False,"maxtime": "", "mintime":"", "genres":[], "minyear":"", "maxyear": "", "maxrating":"", "minrating":""}
+dictionaryPreferences = {"valid": False,"maxtime": "", "mintime": "", "genres":[], "minyear": "", "maxyear": "", "maxrating": "", "minrating": ""}
 global preferencesImportance
 preferencesImportance = {1:"", 2:"", 3:"", "valid":False}
 
@@ -183,21 +183,6 @@ class ThirdWindow(Screen):
     global preferencesImportance
     prefList = []
     errorString = ""
-    global refreshed
-    global top
-    global mList
-    refreshed = pd.DataFrame()
-    top = pd.DataFrame()
-    mList = []
-    
-    def returnTopRefreshedMlist(self):
-        global preferencesImportance
-        global dictionaryPreferences
-        df = finalSort.initialize(dictionaryPreferences)
-        global refreshed
-        global top
-        global mList
-        top, refreshed, mList = finalSort.movieList(df, preferencesImportance, dictionaryPreferences)
     
     def popup(self):
         global dictionaryPreferences
@@ -289,14 +274,39 @@ class ThirdWindow(Screen):
         return screenName
     
 class FourthWindow(Screen): 
+    global preferencesImportance
+    global dictionaryPreferences 
     global refreshed
     global top
     global mList
-    global preferencesImportance
-    global dictionaryPreferences 
+    refreshed = pd.DataFrame()
+    top = pd.DataFrame()
+    mList = []
+    
+    def returnTopRefreshedMlist1(self):
+        global preferencesImportance
+        global dictionaryPreferences
+        global refreshed
+        global top
+        global mList
+        df = finalSort.initialize(dictionaryPreferences)
+        top, refreshed, mList = finalSort.movieList(df, preferencesImportance, dictionaryPreferences)
+    
+    def returnTopRefreshedMlist(self):
+        global preferencesImportance
+        global dictionaryPreferences
+        global refreshed
+        global top
+        global mList
+        if refreshed == pd.DataFrame():
+            print("nothing to refresh")
+        else:
+            top, refreshed, mList = finalSort.movieList(refreshed, preferencesImportance, dictionaryPreferences)
     
     def returnLabelText(self):
-        return top.to_string()
+        global top
+        print(top.to_string())
+        self.ids.resultLabel.text = top.to_string()
         # labelText = ""
         # for i, r in top.iterrows():
         #     labelText.join(str(r))

@@ -28,6 +28,7 @@ def sortTime (newdf, dictionaryPreferences):
     mintime = dictionaryPreferences['mintime']
     
     for index, row in newdf.iterrows():
+        row['runtimeMinutes'] = pd.to_numeric(row['runtimeMinutes'])
         if mintime <= row["runtimeMinutes"] <= maxtime:
             row["weight"] = 200
         else:
@@ -111,10 +112,10 @@ def returnTopRefreshedMlist():
 def returnLabelText(top):
     return top.to_string()
 
-global dictionaryPreferences
-dictionaryPreferences = {"valid": False, "maxtime": 201, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
-global preferencesImportance
-preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":False}
+# global dictionaryPreferences
+# dictionaryPreferences = {"valid": False, "maxtime": 201, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
+# global preferencesImportance
+# preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":False}
 
-topDF, refresheddf, mList = returnTopRefreshedMlist()
-print(returnLabelText(topDF))
+# topDF, refresheddf, mList = returnTopRefreshedMlist()
+# print(returnLabelText(topDF))
