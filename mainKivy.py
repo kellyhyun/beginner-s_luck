@@ -10,7 +10,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
-
+import finalSort
 
 global dictionaryPreferences
 dictionaryPreferences = {"valid": False,"maxtime": "", "mintime":"", "genres":[], "minyear":"", "maxyear": "", "maxrating":"", "minrating":""}
@@ -62,14 +62,14 @@ class SecondWindow(Screen):
         minnum = 1
         try: 
             testmaxnum = float(maxtext)
-            assert ( 1 <= testmaxnum <= 877)
+            assert (45 <= testmaxnum <= 467)
             maxnum = float(maxtext)
         except:
             self.errorList.append("Enter a valid maximum runtime.")
             
         try:
             testminnum = float(mintext)
-            assert ( 1 <= testminnum <= 877)
+            assert (45 <= testminnum <= 467)
             minnum = float(mintext)
         except:
             self.errorList.append("Enter a valid minimum runtime.")
@@ -100,14 +100,14 @@ class SecondWindow(Screen):
         minnum = 1.0
         try: 
             testmaxnum = float(maxtext)
-            assert(1896 <= testmaxnum <= 2022)
+            assert(1915 <= testmaxnum <= 2022)
             maxnum = int(maxtext)
         except:
             self.errorList.append("Enter a valid maximum year.")
             
         try:
             testminnum = float(mintext)
-            assert(1896 <= testminnum <= 2022)
+            assert(1915 <= testminnum <= 2022)
             minnum = int(mintext)
             
         except:
@@ -128,14 +128,14 @@ class SecondWindow(Screen):
         minnum = 1
         try: 
             testmaxnum = float(maxtext)
-            assert(1 <= testmaxnum <= 10)
+            assert(1 <= testmaxnum <= 9.7)
             maxnum = float(maxtext)
         except:
             self.errorList.append("Enter a valid maximum rating.")
             
         try:
             testminnum = float(mintext)
-            assert(1 <= testminnum <= 10)
+            assert(1 <= testminnum <= 9.7)
             minnum = float(mintext)
         except:
             self.errorList.append("Enter a valid minimum rating.")
@@ -182,6 +182,21 @@ class ThirdWindow(Screen):
     global preferencesImportance
     prefList = []
     errorString = ""
+    global refreshed
+    global top
+    global mList
+    refreshed = pd.DataFrame()
+    top = pd.DataFrame()
+    mList = []
+    
+    def returnTopRefreshedMlist(self):
+        global preferencesImportance
+        global dictionaryPreferences
+        df = finalSort.initialize(dictionaryPreferences)
+        global refreshed
+        global top
+        global mList
+        top, refreshed, mList = finalSort.movieList(df, preferencesImportance, dictionaryPreferences)
     
     def popup(self):
         global dictionaryPreferences
@@ -273,27 +288,20 @@ class ThirdWindow(Screen):
         return screenName
     
 class FourthWindow(Screen): 
-    df = pd.read_csv('FinalDatabase.csv', sep=',', header=0, low_memory = False)
-    df['runtimeMinutes'] = pd.to_numeric(df['runtimeMinutes'])
-    df['numVotes'] = pd.to_numeric(df['numVotes'])
-    df["category"] = df["category"].str.replace("[' ]","")
-    df['category'] = df.category.apply(lambda x: x[1:-1].split(','))
-    df["primaryName"] = df["primaryName"].str.replace("[' ]","")
-    df['primaryName'] = df.primaryName.apply(lambda x: x[1:-1].split(','))
-    df['runtimeMinutes'] = pd.to_numeric(df['runtimeMinutes'])
-    df['numVotes'] = pd.to_numeric(df['numVotes'])
+    global refreshed
+    global top
+    global mList
+    global preferencesImportance
+    global dictionaryPreferences 
     
-    def sortGenre (self):
-        global dictionaryPreferences
-        self.df['genres'] = self.df['genres'].str.lower()
-        for i in dictionaryPreferences['genres']:
-            self.df = self.df.loc[self.df['genres'].str.contains(i)] 
+    def returnLabelText(self):
+        return top.to_string()
+        # labelText = ""
+        # for i, r in top.iterrows():
+        #     labelText.join(str(r))
+        # return labelText
     
-    def sortYear (self):
-        pass
     
-    def sortRating (self):
-        pass
     
     def returnBack(self):
         global screenName
@@ -304,7 +312,7 @@ class WindowManager(ScreenManager):
     pass
 
 
-kv = Builder.load_file("test.kv")
+kv = Builder.load_file("main.kv")
 
 
 class MyMainApp(App):
