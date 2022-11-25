@@ -12,8 +12,11 @@ def initialize(dictionaryPreferences):
     df['numVotes'] = pd.to_numeric(df['numVotes'])
     df["category"] = df["category"].str.replace("[' ]","")
     df['category'] = df.category.apply(lambda x: x[1:-1].split(','))
-    df["primaryName"] = df["primaryName"].str.replace("[' ]","")
-    df['primaryName'] = df.primaryName.apply(lambda x: x[1:-1].split(','))
+    df["primaryName"] = df["primaryName"].str.replace("['","", regex = False)
+    df["primaryName"] = df["primaryName"].str.replace("']","", regex = False)
+    df["primaryName"] = df["primaryName"].str.replace(" '","", regex = False)
+    df["primaryName"] = df["primaryName"].str.replace("',",",", regex = False)
+    df['primaryName'] = df.primaryName.apply(lambda x: x[0:-1].split(','))
     df['runtimeMinutes'] = pd.to_numeric(df['runtimeMinutes'])
     df['startYear'] = pd.to_numeric(df['startYear'])
     df['numVotes'] = pd.to_numeric(df['numVotes'])
@@ -107,16 +110,59 @@ def returnTopRefreshedMlist():
     global preferencesImportance
     global dictionaryPreferences
     df = initialize(dictionaryPreferences)
+    global top
     top, refreshed, mList = movieList(df, preferencesImportance, dictionaryPreferences)
     return top, refreshed, mList
 
-def returnLabelText(top):
-    return top.to_string()
+def saveTenMovies():
+    global dictionaryMovies
+    global top
+    listMovie = []
+    for index, row in top.iterrows():
+        dictionary = dict()
+        dictionary['title'] = row.primaryTitle
+        dictionary['year'] = row.startYear
+        dictionary['runtime'] = row.runtimeMinutes
+        dictionary['genres'] = row.genres
+        dictionary['rating'] = row.averageRating
+        dictionary['pplcategories'] = row.category
+        dictionary['pplnames'] = row.primaryName
+        listMovie.append(dictionary)
+    return listMovie
+        
+def returnLabelText():
+    global top
+    global mList
+    listMovie = saveTenMovies()
+    string = ''
+    for i in range(len(listMovie)):
+        if i != 9:
+            title = (".  Title: {}".format(listMovie[i]['title']))
+        else:
+            title = (". Title: {}".format(listMovie[i]['title']))
+        string = string + str(i+1) + title + "\n"
+        runtime = "      Runtime: {}\nn".format(listMovie[i]['runtime'])
+        rating = "      Rating: {}\n".format(listMovie[i]['rating'])
+        year = "      Year of Release: {}\n".format(listMovie[i]['year'])
+        genre = ""
+        for j in range(len(listMovie[i]["genres"])):
+            if j != len(listMovie[i]["genres"])-1:
+                genre = genre + listMovie[i]["genres"][j] + ", " 
+            else:
+                genre = genre + listMovie[i]["genres"][j] + ""
+        genre = "      Genre(s): {} \n".format(genre)
+        people = ""
+        for p in range(len(listMovie[i]["pplcategories"])):
+            people = people + "        " + listMovie[i]["pplcategories"][p] + ": " + listMovie[i]["pplnames"][p] + "\n"
+        people = "      Film Crew:\n{} \n".format(people)
+        string = string + runtime + rating + year + genre + people
+    return string    
 
 # global dictionaryPreferences
 # dictionaryPreferences = {"valid": False, "maxtime": 200, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
 # global preferencesImportance
 # preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":False}
-
-# topDF, refresheddf, mList = returnTopRefreshedMlist()
-# print(returnLabelText(topDF))
+# global top
+# top, refresheddf, mList = returnTopRefreshedMlist()
+# string = returnLabelText()
+# print(string)

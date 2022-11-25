@@ -9,6 +9,7 @@ from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.button import Button
 import finalSort
 
@@ -18,6 +19,8 @@ global preferencesImportance
 preferencesImportance = {1:"", 2:"", 3:"", "valid":False}
 
 Window.maximize()
+dictionaryPreferences = {"valid": True, "maxtime": 200, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
+preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":True}
 
 class MainWindow(Screen):
     def setBack (self, s):
@@ -283,6 +286,7 @@ class FourthWindow(Screen):
     top = pd.DataFrame()
     mList = []
     count = 1
+    global dictionaryTop
     
     def returnTopRefreshedMlist1(self):
         global preferencesImportance
@@ -308,6 +312,7 @@ class FourthWindow(Screen):
             top, refreshed, mList = finalSort.movieList(nextdf, preferencesImportance, dictionaryPreferences)
         except:
             print("error")
+        
     
     def repeatRefresh(self):
         global preferencesImportance
@@ -327,19 +332,55 @@ class FourthWindow(Screen):
             self.ids.statusLabel.text = newtext
             self.count = 1
     
-    def returnLabelText(self):
+    def saveTenMovies(self):
+        global dictionaryMovies
+        global top
+        listMovie = []
+        for index, row in top.iterrows():
+            dictionary = dict()
+            dictionary['title'] = row.primaryTitle
+            dictionary['year'] = row.startYear
+            dictionary['runtime'] = row.runtimeMinutes
+            dictionary['genres'] = row.genres
+            dictionary['rating'] = row.averageRating
+            dictionary['pplcategories'] = row.category
+            dictionary['pplnames'] = row.primaryName
+            dictionary['summary'] = ""
+            listMovie.append(dictionary)
+        return listMovie
+    
+    def returnStringText(self):
         global top
         global mList
-        print(mList)
-        self.ids.resultLabel.text = str(mList)
-        # print(top.to_string())
-        # self.ids.resultLabel.text = top.to_string()
-        # labelText = ""
-        # for i, r in top.iterrows():
-        #     labelText.join(str(r))
-        # return labelText
+        listMovie = self.saveTenMovies()
+        string = ''
+        for i in range(len(listMovie)):
+            if i != 9:
+                title = (".  Title: {}".format(listMovie[i]['title']))
+            else:
+                title = (". Title: {}".format(listMovie[i]['title']))
+            string = string + str(i+1) + title + "\n"
+            runtime = "      Runtime: {}".format(listMovie[i]['runtime'])
+            rating = "      Rating: {}".format(listMovie[i]['rating'])
+            year = "      Year of Release: {}\n".format(listMovie[i]['year'])
+            genre = ""
+            for j in range(len(listMovie[i]["genres"])):
+                if j != len(listMovie[i]["genres"])-1:
+                    genre = genre + listMovie[i]["genres"][j] + ", " 
+                else:
+                    genre = genre + listMovie[i]["genres"][j] + ""
+            genre = "      Genre(s): {} \n".format(genre)
+            people = ""
+            for p in range(len(listMovie[i]["pplcategories"])):
+                people = people + "        " + listMovie[i]["pplcategories"][p] + ": " + listMovie[i]["pplnames"][p] + ""
+            people = "      Film Crew: {} \n\n".format(people)
+            string = string + runtime + rating + year + genre + people
+        return string  
     
-    
+    def returnLabelText(self):
+        global top
+        printThis = self.returnStringText()
+        self.ids.resultLabel.text = printThis
     
     def returnBack(self):
         global screenName

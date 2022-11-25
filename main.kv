@@ -384,16 +384,22 @@ WindowManager:
             Label:
                 id: statusLabel
                 text: "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh four times to recieve more movie recommendations."
-                
-        GridLayout:
-            size_hint: 0.8, 0.6
-            pos_hint: {"center_x": 0.5, "top": .8}
-            cols:1
-            
-            Label:
-                id: resultLabel
-                text: ""
+    
         
+        GridLayout:
+            cols: 1
+            size_hint: 0.8, 0.6
+            height: 400
+            pos_hint: {"center_x": 0.5, "top": .8}
+            ScrollView:
+                Label:
+                    id: resultLabel
+                    text: ""
+                    size_hint: 1, None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                
+    
         GridLayout:
             size_hint: 0.8, 0.08
             pos_hint: {"center_x": 0.5, "top": 0.2}
