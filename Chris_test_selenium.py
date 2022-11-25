@@ -23,9 +23,10 @@ options.add_experimental_option("detach", True)
 # options.add_argument("--headless")
 driver = webdriver.Chrome(service=s, options=options)
 
+database = pd.read_csv('ourDatabase.csv')
 
 # --------------------  GETTING MOVIE INFO -----------------
-def scrape_movie_info(movie_name):
+def scrape_movie_info_imdb(movie_name):
     # ----------------  SET UP CHROMEDRIVER ----------------
     driver.get("https://www.imdb.com/find?q=" + movie_name + "&ref_=nv_sr_sm")
     # Assumption: The movie we're looking for is the first result that comes up
@@ -47,12 +48,14 @@ def scrape_movie_info(movie_name):
 
     # ---------------   LOOK FOR DATA ------------------------
     print('-------------------------------------------------------------------------------------')
+    movie_name_header = soup.find('h1')
+    title = movie_name_header.get_text()
+    release_year = soup.select(".WIUyh")
+    release_year = release_year[0].get_text()
+
     names = soup.select(".ipc-inline-list__item .ipc-metadata-list-item__list-content-item--link")
     director = names[0].get_text()
-    print(f"Director: {director}")
-
     movie_summary = soup.select(".gXUyNh")[0].get_text()
-    print(f"Summary: {movie_summary}")
 
     trailer_html = ''
     try:
@@ -61,14 +64,33 @@ def scrape_movie_info(movie_name):
     except NoSuchElementException:
         trailer_html = driver.find_element(By.XPATH, '//*[@id="__next"]/main/div/section[1]/div/section/div/div[1]/section[2]/div[2]/div[2]/div[1]/div[1]/a')
         trailer_link = trailer_html.get_attribute('href')
-    print(f"Trailer link: {trailer_link}")
-
+    string4 = f"Trailer link: {trailer_link}\n"
     if trailer_link == '':
-        print("There's no existing trailer for this movie/show on IMDB!")
+        string4 = "There's no existing trailer for this movie/show on IMDB!"
 
-def scrape_movies_list(movie_names_list):
-    for movie in movie_names_list:
-        scrape_movie_info(movie)
+    string1 = f"{title} ({release_year})\n"
+    string2 = f"Director: {director}\n"
+    string3 = f"Summary: {movie_summary}\n"
+
+
+    return title, string1, string2, string3, string4
+
+
+def scrape_movie_info_database(movie_name):
+    r = database.loc[database["primaryTitle"] == movie_name]["averageRating"].to_string(index=False)
+    n = database.loc[database["primaryTitle"] == movie_name]["numVotes"].to_string(index=False)
+    runtime = database.loc[database["primaryTitle"] == movie_name]["runtimeMinutes"].to_string(index=False)
+    string5 = f'Rating: {r} ({n} votes)\n'
+    string6 = f'Runtime: {runtime} min\n'
+    return string5, string6
+
+
+def all_together(movie):
+    t,s1,s2,s3,s4 = scrape_movie_info_imdb(movie)
+    s5,s6 = scrape_movie_info_database(t)
+    final_output = s1+s2+s5+s6+s3+s4
+    print(final_output)
+    return final_output
 
 
 if __name__ == '__main__':
@@ -84,4 +106,5 @@ if __name__ == '__main__':
             search_movie = input("What movie would you like information about?")
             list_of_movies.append(search_movie)
     print(list_of_movies)
-    scrape_movies_list(list_of_movies)
+    for movie in list_of_movies:
+        final_output = all_together(movie)
