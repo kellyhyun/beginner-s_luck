@@ -38,8 +38,8 @@ Director
 Average Rating
 Number of Votes
 Runtime
-Genre
 Summary
+Trailer link
 ```
 
 ### Runtime?
