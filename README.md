@@ -35,9 +35,9 @@ Movie Name
 Output:
 ```
 Director
-Main Cast
 Average Rating
 Number of Votes
+Runtime
 Genre
 Summary
 ```
