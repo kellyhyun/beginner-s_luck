@@ -325,7 +325,7 @@ class FourthWindow(Screen):
         if self.count != 5:
             self.repeathelper(new)
             self.count += 1
-            self.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh four times to recieve more movie recommendations."
+            self.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh four times to receive more movie recommendations."
         else:
             self.repeathelper(og)
             newtext = self.ids.statusLabel.text + "\nResults restarted."
