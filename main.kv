@@ -368,8 +368,7 @@ WindowManager:
             Button:
                 text: "Back"
                 on_release:
-                    screen = root.returnBack()
-                    app.root.current = screen
+                    app.root.current = "input"
                     root.manager.transition.direction = "right"
   
 
@@ -383,7 +382,7 @@ WindowManager:
             
             Label:
                 id: statusLabel
-                text: "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh four times to recieve more movie recommendations."
+                text: "Load your results."
     
         
         GridLayout:
@@ -407,12 +406,17 @@ WindowManager:
             
             Button:
                 text: "Load"
+                on_press:
+                    root.ids.statusLabel.text = "Loading..."
                 on_release:
+                    root.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh to recieve more movie recommendations."
                     root.returnTopRefreshedMlist1()
                     root.returnLabelText() 
             
             Button:
                 text: "Refresh"
+                on_press:
+                    root.ids.statusLabel.text = "Loading..."
                 on_release:
                     root.repeatRefresh()
                     root.returnLabelText()

@@ -12,15 +12,19 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.button import Button
 import finalSort
+import seleniumMain
 
 global dictionaryPreferences
-dictionaryPreferences = {"valid": False,"maxtime": "", "mintime": "", "genres":[], "minyear": "", "maxyear": "", "maxrating": "", "minrating": ""}
 global preferencesImportance
+dictionaryPreferences = {"valid": False, "maxtime": "", "mintime":"", "genres":[], "minyear":"", "maxyear": "", "maxrating":"", "minrating":""}
 preferencesImportance = {1:"", 2:"", 3:"", "valid":False}
 
 Window.maximize()
-dictionaryPreferences = {"valid": True, "maxtime": 200, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
-preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":True}
+
+##FOR TESTING PURPOSES##
+# dictionaryPreferences = {"valid": True, "maxtime": 180, "mintime":100, "genres":["Comedy"], "minyear":2015, "maxyear": 2022, "maxrating":8.5, "minrating":8.4}
+# preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":True}
+
 
 class MainWindow(Screen):
     def setBack (self, s):
@@ -87,6 +91,7 @@ class SecondWindow(Screen):
                 self.errorList.append("The maximum runtime should be larger or equal to the minimum runtime.")
 
     def saveGenre(self):
+        global dictionaryPreferences
         self.choiceList = []
         for child in reversed(self.ids.genrecontainer.children):
             if isinstance(child, ToggleButton):
@@ -325,7 +330,7 @@ class FourthWindow(Screen):
         if self.count != 5:
             self.repeathelper(new)
             self.count += 1
-            self.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh four times to recieve more movie recommendations."
+            self.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh to recieve more movie recommendations."
         else:
             self.repeathelper(og)
             newtext = self.ids.statusLabel.text + "\nResults restarted."
@@ -335,6 +340,7 @@ class FourthWindow(Screen):
     def saveTenMovies(self):
         global dictionaryMovies
         global top
+        print(top)
         listMovie = []
         for index, row in top.iterrows():
             dictionary = dict()
@@ -345,8 +351,10 @@ class FourthWindow(Screen):
             dictionary['rating'] = row.averageRating
             dictionary['pplcategories'] = row.category
             dictionary['pplnames'] = row.primaryName
-            dictionary['summary'] = ""
+            dictionary['votes'] = row.numVotes
+            dictionary['summary'], dictionary['trailer'] = seleniumMain.scrape_movie_info_imdb(row.primaryTitle)
             listMovie.append(dictionary)
+            print(dictionary)
         return listMovie
     
     def returnStringText(self):
@@ -355,27 +363,31 @@ class FourthWindow(Screen):
         listMovie = self.saveTenMovies()
         string = ''
         for i in range(len(listMovie)):
-            if i != 9:
-                title = (".  Title: {}".format(listMovie[i]['title']))
-            else:
-                title = (". Title: {}".format(listMovie[i]['title']))
+            title = (".\nTitle: {}".format(listMovie[i]['title']))
             string = string + str(i+1) + title + "\n"
-            runtime = "      Runtime: {}".format(listMovie[i]['runtime'])
-            rating = "      Rating: {}".format(listMovie[i]['rating'])
-            year = "      Year of Release: {}\n".format(listMovie[i]['year'])
+            string = string + listMovie[i]['summary']
+            runtime = "Runtime: {}\n".format(listMovie[i]['runtime'])
+            rating = "Rating: {} ({} votes)\n".format(listMovie[i]['rating'], listMovie[i]['votes'])
+            year = "Year of Release: {}\n".format(listMovie[i]['year'])
             genre = ""
             for j in range(len(listMovie[i]["genres"])):
                 if j != len(listMovie[i]["genres"])-1:
                     genre = genre + listMovie[i]["genres"][j] + ", " 
                 else:
                     genre = genre + listMovie[i]["genres"][j] + ""
-            genre = "      Genre(s): {} \n".format(genre)
+            genre = "Genre(s): {} \n".format(genre)
             people = ""
+            eachperson = []
             for p in range(len(listMovie[i]["pplcategories"])):
-                people = people + "        " + listMovie[i]["pplcategories"][p] + ": " + listMovie[i]["pplnames"][p] + ""
-            people = "      Film Crew: {} \n\n".format(people)
+                person = "  " + listMovie[i]["pplcategories"][p].title() + ": " + listMovie[i]["pplnames"][p] + "\n"
+                eachperson.append(person)
+            eachperson.sort(reverse=True)
+            for each in eachperson:
+                people = people + each 
+            people = "Film Crew:\n{} ".format(people)
             string = string + runtime + rating + year + genre + people
-        return string  
+            string = string + '      ' + listMovie[i]['trailer'] + '\n'
+        return string    
     
     def returnLabelText(self):
         global top

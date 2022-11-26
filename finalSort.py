@@ -5,6 +5,7 @@ Created on Wed Nov  2 20:34:22 2022
 @author: kelly
 """
 import pandas as pd
+import seleniumMain
 
 def initialize(dictionaryPreferences):
     df = pd.read_csv('FinalDatabase-MovieOnly.csv', sep=',', header=0, low_memory = False)
@@ -81,7 +82,7 @@ def sortRating (weight, newdf, dictionaryPreferences):
 def combineSort(newdf, preferencesImportance, dictionaryPreferences):
     newdf = sortTime(newdf, dictionaryPreferences)
     newdf = newdf.sort_values(by=['weight'],ascending=False)
-    newdf = newdf.head(50)
+    newdf = newdf.head(1000)
     
     for rank in range(1,4):
         ranktoweight = {1:3, 2:2, 3:1}
@@ -118,6 +119,7 @@ def saveTenMovies():
     global dictionaryMovies
     global top
     listMovie = []
+    global string1
     for index, row in top.iterrows():
         dictionary = dict()
         dictionary['title'] = row.primaryTitle
@@ -127,6 +129,7 @@ def saveTenMovies():
         dictionary['rating'] = row.averageRating
         dictionary['pplcategories'] = row.category
         dictionary['pplnames'] = row.primaryName
+        dictionary['votes'] = row.numVotes
         listMovie.append(dictionary)
     return listMovie
         
@@ -141,7 +144,7 @@ def returnLabelText():
         else:
             title = (". Title: {}".format(listMovie[i]['title']))
         string = string + str(i+1) + title + "\n"
-        runtime = "      Runtime: {}\nn".format(listMovie[i]['runtime'])
+        runtime = "      Runtime: {}\n".format(listMovie[i]['runtime'])
         rating = "      Rating: {}\n".format(listMovie[i]['rating'])
         year = "      Year of Release: {}\n".format(listMovie[i]['year'])
         genre = ""
@@ -152,14 +155,19 @@ def returnLabelText():
                 genre = genre + listMovie[i]["genres"][j] + ""
         genre = "      Genre(s): {} \n".format(genre)
         people = ""
+        eachperson = []
         for p in range(len(listMovie[i]["pplcategories"])):
-            people = people + "        " + listMovie[i]["pplcategories"][p] + ": " + listMovie[i]["pplnames"][p] + "\n"
+            person = "        " + listMovie[i]["pplcategories"][p].title() + ": " + listMovie[i]["pplnames"][p] + "\n"
+            eachperson.append(person)
+        eachperson.sort(reverse=True)
+        for each in eachperson:
+            people = people + each 
         people = "      Film Crew:\n{} \n".format(people)
         string = string + runtime + rating + year + genre + people
     return string    
 
 # global dictionaryPreferences
-# dictionaryPreferences = {"valid": False, "maxtime": 200, "mintime":200, "genres":["Horror", "Thriller", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
+# dictionaryPreferences = {"valid": False, "maxtime": 200, "mintime":180, "genres":["Horror", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
 # global preferencesImportance
 # preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":False}
 # global top
