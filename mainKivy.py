@@ -137,14 +137,14 @@ class SecondWindow(Screen):
         minnum = 1
         try: 
             testmaxnum = float(maxtext)
-            assert(1 <= testmaxnum <= 9.7)
+            assert(1 <= testmaxnum <= 10)
             maxnum = float(maxtext)
         except:
             self.errorList.append("Enter a valid maximum rating.")
             
         try:
             testminnum = float(mintext)
-            assert(1 <= testminnum <= 9.7)
+            assert(1 <= testminnum <= 10)
             minnum = float(mintext)
         except:
             self.errorList.append("Enter a valid minimum rating.")
@@ -330,7 +330,7 @@ class FourthWindow(Screen):
         if self.count != 5:
             self.repeathelper(new)
             self.count += 1
-            self.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh to recieve more movie recommendations."
+            self.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh to receive more movie recommendations."
         else:
             self.repeathelper(og)
             newtext = self.ids.statusLabel.text + "\nResults restarted."
@@ -379,14 +379,14 @@ class FourthWindow(Screen):
             people = ""
             eachperson = []
             for p in range(len(listMovie[i]["pplcategories"])):
-                person = "  " + listMovie[i]["pplcategories"][p].title() + ": " + listMovie[i]["pplnames"][p] + "\n"
+                person = "   " + listMovie[i]["pplcategories"][p].title() + ": " + listMovie[i]["pplnames"][p] + "\n"
                 eachperson.append(person)
             eachperson.sort(reverse=True)
             for each in eachperson:
                 people = people + each 
-            people = "Film Crew:\n{} ".format(people)
+            people = "Film Crew:\n{}".format(people)
             string = string + runtime + rating + year + genre + people
-            string = string + '      ' + listMovie[i]['trailer'] + '\n'
+            string = string + listMovie[i]['trailer'] + '\n'
         return string    
     
     def returnLabelText(self):

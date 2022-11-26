@@ -201,13 +201,13 @@ WindowManager:
             pos_hint: {"center_x": 0.5, "top": .275 }
             cols: 1
             Label:
-                text:"What is your preferred maximum rating? (Input a number between 1 - 9.7)"
+                text:"What is your preferred maximum rating? (Input a number between 1 - 10)"
             
             TextInput:
                 id:maxrating
                 
             Label:
-                text:"What is your preferred minimum rating? (Input a number between 1 - 9.7)"
+                text:"What is your preferred minimum rating? (Input a number between 1 - 10)"
             
             TextInput:
                 id:minrating
@@ -409,7 +409,7 @@ WindowManager:
                 on_press:
                     root.ids.statusLabel.text = "Loading..."
                 on_release:
-                    root.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh to recieve more movie recommendations."
+                    root.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh to receive more movie recommendations."
                     root.returnTopRefreshedMlist1()
                     root.returnLabelText() 
             
