@@ -61,12 +61,14 @@ def scrape_movie_info_imdb(movie_name):
     try:
         trailer_html = driver.find_element(By.XPATH, '//*[@id="imdbnext-vp-jw-inline"]/div[2]/div[4]/video')
         trailer_link = trailer_html.get_attribute('src')
+        string4 = f"Trailer link: {trailer_link}\n"
     except NoSuchElementException:
-        trailer_html = driver.find_element(By.XPATH, '//*[@id="__next"]/main/div/section[1]/div/section/div/div[1]/section[2]/div[2]/div[2]/div[1]/div[1]/a')
-        trailer_link = trailer_html.get_attribute('href')
-    string4 = f"Trailer link: {trailer_link}\n"
-    if trailer_link == '':
-        string4 = "There's no existing trailer for this movie/show on IMDB!"
+        try:
+            trailer_html = driver.find_element(By.XPATH, '//*[@id="__next"]/main/div/section[1]/div/section/div/div[1]/section[2]/div[2]/div[2]/div[1]/div[1]/a')
+            trailer_link = trailer_html.get_attribute('href')
+            string4 = f"Trailer link: {trailer_link}\n"
+        except NoSuchElementException:
+            string4 = "There's no existing trailer for this movie/show on IMDB!"
 
     string1 = f"{title} ({release_year})\n"
     string2 = f"Director: {director}\n"
