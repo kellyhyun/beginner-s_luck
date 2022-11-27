@@ -100,3 +100,5 @@ While the code allows for a few functionalities that generates numerous outputs,
 
 3. Include an option, where it asks the user to click on a hyperlink that takes him/her directly to the movie's IMDB webpage for further information.
 
+4. Utilize lxml parser instead of html.parser to further increase the webscraping speed.
+
