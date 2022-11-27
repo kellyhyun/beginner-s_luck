@@ -26,6 +26,9 @@ We all know about Pandas. Our group used pandas to filter through the entire iMD
 ### Kivy
 Kivy is an open source GUI development package that allows users to build an app once and be used across all platforms. To utilize this package, the user must create both python and kivy code in order to create applications that are usable. When running the code on an IDE, make sure to restart kernel every time after use to ensure minimal error and issue. 
 
+### Miscellaneous
+While this isn't considered a package, IMDB database was downloaded to facilitate the filtering process of the code when searching for movies. This significantly reduces the runtime of the code as it reduces the amount of webscraping that needs to take place to gather all the necessary information. The csv file of the database can be found in the file labeled 'finaldatabased.csv'
+
 ## Functions
 
 ### Basics
@@ -87,7 +90,6 @@ Else:
 ```    
 Once the precedence is set, the list of movies suggested should follow the structure above and output them in a correct order.
 
-### Additional Preferences
 
 ### Limitations and Future work
 While the code allows for a few functionalities that generates numerous outputs, there are still areas for improvement. Some of the areas that can be improved are as follows:
