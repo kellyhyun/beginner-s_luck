@@ -23,6 +23,9 @@ BeautifulSoup4, or BS4, is another web scraping package that is known to be more
 ### Pandas
 We all know about Pandas. Our group used pandas to filter through the entire iMDB film database to create our own, more selective database of movies. Each time the code is run, we will sort through the database using pandas to find the best movies as well!
 
+### Kivy
+Kivy is an open source GUI development package that allows users to build an app once and be used across all platforms. To utilize this package, the user must create both python and kivy code in order to create applications that are usable. When running the code on an IDE, make sure to restart kernel every time after use to ensure minimal error and issue. 
+
 ## Functions
 
 ### Basics
@@ -85,4 +88,13 @@ Else:
 Once the precedence is set, the list of movies suggested should follow the structure above and output them in a correct order.
 
 ### Additional Preferences
+
+### Limitations and Future work
+While the code allows for a few functionalities that generates numerous outputs, there are still areas for improvement. Some of the areas that can be improved are as follows:
+
+1. Implement a feature where trailer link generated can be clickable so that it can be directed to a webpage with the trailer loaded for viewing.
+
+2. Add a feature where the runtime, rating, and year attributes that be toggled with sliding bars. This way, the user would not have to input the values manually.
+
+3. Include an option, where it asks the user to click on a hyperlink that takes him/her directly to the movie's IMDB webpage for further information.
 
