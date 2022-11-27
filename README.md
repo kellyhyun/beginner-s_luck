@@ -94,7 +94,7 @@ Once the precedence is set, the list of movies suggested should follow the struc
 ### Limitations and Future work
 While the code allows for a few functionalities that generates numerous outputs, there are still areas for improvement. Some of the areas that can be improved are as follows:
 
-1. Implement a feature where trailer link generated can be clickable so that it can be directed to a webpage with the trailer loaded for viewing.
+1. Implement a feature where trailer link generated can be clickable so that it can be directed to a webpage with the trailer loaded for viewing. Another method to approach this concept is to preload the trailer videos into the GUI, where the user has the option to directly click on the corresponding video to view. 
 
 2. Add a feature where the runtime, rating, and year attributes that be toggled with sliding bars. This way, the user would not have to input the values manually.
 
