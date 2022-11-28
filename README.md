@@ -1,5 +1,5 @@
 # G06: Beginner's luck
-# Final Project: Title
+# Final Project: Movie Generator
 ## Members
   Lawrence Chung, Christopher Hong, Kelly Hyun, Paul Kim
 
