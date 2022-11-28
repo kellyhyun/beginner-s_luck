@@ -20,6 +20,9 @@ The link to download Chromedriver can be found here: https://chromedriver.chromi
 
 ### BeautifulSoup4
 BeautifulSoup4, or BS4, is another web scraping package that is known to be more efficient for smaller projects. BS4 tends to run a bit quicker than Selenium when dealing with a static webpage. We chose BS4 over Selenium to scrape information from the destination pages' html codes to leverage this strength.
+
+### Requests
+Request is a simple HTTP library package used to send HTTP requests via python.
 ### Pandas
 We all know about Pandas. Our group used pandas to filter through the entire iMDB film database to create our own, more selective database of movies. Each time the code is run, we will sort through the database using pandas to find the best movies as well!
 
