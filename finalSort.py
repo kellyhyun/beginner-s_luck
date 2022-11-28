@@ -31,6 +31,7 @@ def initialize(dictionaryPreferences):
 def sortTime (newdf, dictionaryPreferences):
     maxtime = dictionaryPreferences['maxtime'] 
     mintime = dictionaryPreferences['mintime']
+    newdf = newdf.drop(newdf[newdf['runtimeMinutes'] > maxtime].index)
     
     for index, row in newdf.iterrows():
         if mintime <= row["runtimeMinutes"] <= maxtime:
@@ -167,7 +168,7 @@ def returnLabelText():
     return string    
 
 # global dictionaryPreferences
-# dictionaryPreferences = {"valid": False, "maxtime": 200, "mintime":180, "genres":["Horror", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
+# dictionaryPreferences = {"valid": False, "maxtime": 180, "mintime":180, "genres":["Horror", "Comedy"], "minyear":1990, "maxyear": 2000, "maxrating":8.5, "minrating":8.4}
 # global preferencesImportance
 # preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":False}
 # global top

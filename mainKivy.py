@@ -327,7 +327,7 @@ class FourthWindow(Screen):
         global mList
         global og
         new = refreshed.copy()
-        if self.count != 5:
+        if self.count != 10:
             self.repeathelper(new)
             self.count += 1
             self.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh to receive more movie recommendations."
