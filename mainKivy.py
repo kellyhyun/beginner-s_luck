@@ -22,8 +22,8 @@ preferencesImportance = {1:"", 2:"", 3:"", "valid":False}
 Window.maximize()
 
 ##FOR TESTING PURPOSES##
-# dictionaryPreferences = {"valid": True, "maxtime": 180, "mintime":100, "genres":["Comedy"], "minyear":2015, "maxyear": 2022, "maxrating":8.5, "minrating":8.4}
-# preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":True}
+dictionaryPreferences = {"valid": True, "maxtime": 170, "mintime":170, "genres":["Comedy"], "minyear":2015, "maxyear": 2022, "maxrating":8.5, "minrating":8.4}
+preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":True}
 
 
 class MainWindow(Screen):
@@ -272,7 +272,7 @@ class FourthWindow(Screen):
     count = 1
     global dictionaryTop
     
-    def returnTopRefreshedMlist1(self):
+    def returnInitial(self):
         global preferencesImportance
         global dictionaryPreferences
         global refreshed
@@ -280,6 +280,8 @@ class FourthWindow(Screen):
         global mList
         global og
         try:
+            global refreshedInt
+            refreshedInt = 0
             df = finalSort.initialize(dictionaryPreferences)
             og = df
             top, refreshed, mList = finalSort.movieList(df, preferencesImportance, dictionaryPreferences)
@@ -296,7 +298,6 @@ class FourthWindow(Screen):
             top, refreshed, mList = finalSort.movieList(nextdf, preferencesImportance, dictionaryPreferences)
         except:
             print("error")
-        
     
     def repeatRefresh(self):
         global preferencesImportance
@@ -305,13 +306,16 @@ class FourthWindow(Screen):
         global top
         global mList
         global og
+        global refreshedInt
         new = refreshed.copy()
         if self.count != 10:
             self.repeathelper(new)
             self.count += 1
             self.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh to receive more movie recommendations."
+            refreshedInt += 1
         else:
             self.repeathelper(og)
+            refreshedInt = 0
             newtext = self.ids.statusLabel.text + "\nResults restarted."
             self.ids.statusLabel.text = newtext
             self.count = 1
@@ -341,9 +345,10 @@ class FourthWindow(Screen):
         global mList
         listMovie = self.saveTenMovies()
         string = ''
+        global refreshedInt
         for i in range(len(listMovie)):
             title = (".\nTitle: {}".format(listMovie[i]['title']))
-            string = string + str(i+1) + title + "\n"
+            string = string + str(i+1+10*refreshedInt) + title + "\n"
             string = string + listMovie[i]['summary']
             runtime = "Runtime: {}\n".format(listMovie[i]['runtime'])
             rating = "Rating: {} ({} votes)\n".format(listMovie[i]['rating'], listMovie[i]['votes'])

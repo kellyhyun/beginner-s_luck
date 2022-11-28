@@ -49,17 +49,15 @@ def scrape_movie_info_imdb(movie_name):
 
     # ---------------   LOOK FOR DATA ------------------------
     print('-------------------------------------------------------------------------------------')
-    movie_name_header = soup.find('h1')
-    title = movie_name_header.get_text()
-    release_year = soup.select(".WIUyh")
-
     names = soup.select(".ipc-inline-list__item .ipc-metadata-list-item__list-content-item--link")
+    
     try:
         movie_summary = soup.select(".gXUyNh")[0].get_text()
     except:
         movie_summary = "Not avaliable."
 
     trailer_html = ''
+    
     try:
         trailer_html = driver.find_element(By.XPATH, '//*[@id="imdbnext-vp-jw-inline"]/div[2]/div[4]/video')
         trailer_link = trailer_html.get_attribute('src')
@@ -72,26 +70,25 @@ def scrape_movie_info_imdb(movie_name):
         except NoSuchElementException:
             string4 = "There's no existing trailer for this movie/show on IMDB!\n"
 
-    string1 = f"{title} ({release_year})\n"
     string3 = f"Summary: {movie_summary}\n"
     return string3, string4 #title, string1, string2
 
 
-def scrape_movie_info_database(movie_name):
-    r = database.loc[database["primaryTitle"] == movie_name]["averageRating"].to_string(index=False)
-    n = database.loc[database["primaryTitle"] == movie_name]["numVotes"].to_string(index=False)
-    runtime = database.loc[database["primaryTitle"] == movie_name]["runtimeMinutes"].to_string(index=False)
-    string5 = f'Rating: {r} ({n} votes)\n'
-    string6 = f'Runtime: {runtime} min\n'
-    return string5, string6
+# def scrape_movie_info_database(movie_name):
+#     r = database.loc[database["primaryTitle"] == movie_name]["averageRating"].to_string(index=False)
+#     n = database.loc[database["primaryTitle"] == movie_name]["numVotes"].to_string(index=False)
+#     runtime = database.loc[database["primaryTitle"] == movie_name]["runtimeMinutes"].to_string(index=False)
+#     string5 = f'Rating: {r} ({n} votes)\n'
+#     string6 = f'Runtime: {runtime} min\n'
+#     return string5, string6
 
 
-def all_together(movie):
-    t,s1,s2,s3,s4 = scrape_movie_info_imdb(movie)
-    s5,s6 = scrape_movie_info_database(t)
-    final_output = s1+s2+s5+s6+s3+s4
-    print(final_output)
-    return final_output
+# def all_together(movie):
+#     t,s1,s2,s3,s4 = scrape_movie_info_imdb(movie)
+#     s5,s6 = scrape_movie_info_database(t)
+#     final_output = s1+s2+s5+s6+s3+s4
+#     print(final_output)
+#     return final_output
 
 
 # if __name__ == '__main__':
