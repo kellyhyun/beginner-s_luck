@@ -35,14 +35,12 @@ WindowManager:
         Button:
             text: "Set your preferences."
             on_release:
-                root.setBack("main")
                 app.root.current = "input" 
                 root.manager.transition.direction = "left"
                 
         Button:
             text: "Results from previously set inputs."
             on_release:
-                root.setBack("main")
                 app.root.current = "results" 
                 root.manager.transition.direction = "left"
 
@@ -231,8 +229,6 @@ WindowManager:
                     move = (root.returnBoolPref())
                     print(move)
                     if move: \
-                    root.setBack("input") 
-                    if move: \
                     app.root.current = "importance" 
                     if move: \
                     root.manager.transition.direction = "left"
@@ -242,8 +238,7 @@ WindowManager:
             Button:
                 text: "Back"
                 on_release:
-                    screen = root.returnBack()
-                    app.root.current = screen
+                    app.root.current = "main"
                     root.manager.transition.direction = "right"
             
         
@@ -357,8 +352,6 @@ WindowManager:
                     move = (root.returnBoolPref() and root.returnBoolImport())
                     print(move)
                     if move: \
-                    root.setBack("importance") 
-                    if move: \
                     app.root.current = "results" 
                     if move: \
                     root.manager.transition.direction = "left"
@@ -424,8 +417,7 @@ WindowManager:
             Button:
                 text: "Back"
                 on_release:
-                    screen = root.returnBack()
-                    app.root.current = screen
+                    app.root.current = "importance"
                     root.manager.transition.direction = "right"
                     
         GridLayout:

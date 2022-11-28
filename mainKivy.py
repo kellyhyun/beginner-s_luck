@@ -27,10 +27,7 @@ Window.maximize()
 
 
 class MainWindow(Screen):
-    def setBack (self, s):
-        global screenName
-        screenName = s
-        return screenName
+    pass
 
 class SecondWindow(Screen):
     genrecontainer = ObjectProperty()
@@ -156,15 +153,6 @@ class SecondWindow(Screen):
                 dictionaryPreferences["minrating"] = minnum
             except:
                 self.errorList.append("The maximum rating should be larger or equal to the minimum rating.")
-        
-    def setBack (self, s):
-        global screenName
-        screenName = s
-        return screenName  
-    
-    def returnBack(self):
-        global screenName
-        return screenName
     
     def returnBoolPref(self):
         global dictionaryPreferences
@@ -271,15 +259,6 @@ class ThirdWindow(Screen):
     def returnBoolImport(self):
         global preferencesImportance
         return preferencesImportance["valid"]
-    
-    def returnBack(self):
-        global screenName
-        return screenName
-    
-    def setBack (self, s):
-        global screenName
-        screenName = s
-        return screenName
     
 class FourthWindow(Screen): 
     global preferencesImportance
@@ -393,10 +372,6 @@ class FourthWindow(Screen):
         global top
         printThis = self.returnStringText()
         self.ids.resultLabel.text = printThis
-    
-    def returnBack(self):
-        global screenName
-        return screenName
     
 
 class WindowManager(ScreenManager):
