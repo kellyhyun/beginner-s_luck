@@ -15,6 +15,11 @@ Selenium is a web scraping package that is most commonly used in complex project
 
 NOTE: In order to utilize Selenium, user needs to download Chromedriver in order to run the codes related to Selenium.
 When downloading the driver, make sure to download the correct version corresponding to your chrome.
+In order for the code to run properly, make sure the service for the Chromedriver is in an executable path.
+
+```
+s = Service("appropriate pathname")
+```
 
 The link to download Chromedriver can be found here: https://chromedriver.chromium.org/downloads
 
