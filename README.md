@@ -3,6 +3,12 @@
 ## Members
   Lawrence Chung, Christopher Hong, Kelly Hyun, Paul Kim
 
+
+## Overview
+Have you ever been annoyed because you had to go to a meeting halfway through watching a movie at home? Our program can give you a list of movies that you can finish just in time for your next schedule, so you don't have to care about runtime when you choose a movie to watch. There are a lot of websites online, such as [iMDB]([url](https://www.imdb.com/?ref_=nv_home)) that allow you to search for movies based on rating, number of votes, director, genre and more. However, to some movie-lovers' frustration, these websites lack a way to filter movies by runtime. 
+
+Using packages such as [Selenium]([url](https://www.selenium.dev/)) and [BeautifulSoup4]([url](https://pypi.org/project/beautifulsoup4/)), our program is able to find you a list of recommended movies that you can finish just before you leave for your next schedule. In addition, you may filter the results using different criteria such as number of user votes, average rating, genre, and more to find the best movie for you more easily!
+
 ## Running Code Locally
 
 In order to make sure this code runs on your own laptop, there are a couple of things that you may have to tweak. Make sure you get this right, or it will continue to pop errors!
@@ -12,10 +18,7 @@ In order to make sure this code runs on your own laptop, there are a couple of t
 4. Navigate to line 44 of the same file. You may have to adjust the request header depending on your browser. Here is a link to instructions on how to find your own http header. https://mkyong.com/computer-tips/how-to-view-http-headers-in-google-chrome/#:~:text=To%20view%20the%20request%20or,displayed%20on%20the%20right%20panel.
 5. Once those are completed, you're free to go! Run mainKivy.py, our main code.
 
-## Overview
-Have you ever been annoyed because you had to go to a meeting halfway through watching a movie at home? Our program can give you a list of movies that you can finish just in time for your next schedule, so you don't have to care about runtime when you choose a movie to watch. There are a lot of websites online, such as [iMDB]([url](https://www.imdb.com/?ref_=nv_home)) that allow you to search for movies based on rating, number of votes, director, genre and more. However, to some movie-lovers' frustration, these websites lack a way to filter movies by runtime. 
-
-Using packages such as [Selenium]([url](https://www.selenium.dev/)) and [BeautifulSoup4]([url](https://pypi.org/project/beautifulsoup4/)), our program is able to find you a list of recommended movies that you can finish just before you leave for your next schedule. In addition, you may filter the results using different criteria such as number of user votes, average rating, genre, and more to find the best movie for you more easily!
+Note that our program takes a couple of minutes to run. While the GUI shows "loading," feel free to go grab a cup of water and get ready for a movie!
 
 ## Packages used
 
@@ -66,7 +69,7 @@ Trailer link
 ```
 
 ### Runtime?
-From now on, you'll always be able to satisfyingly finish a movie before you have to head out. Simply input how much time you have, we'll find a few good ones you could squeeze in that time frame.
+From now on, you'll always be able to satisfyingly finish a movie before you have to head out. The maximum runtime preferred will be set as a hard limit, so you'll definitely be able to finish the movie before you leave.
 
 ### Preference Structuring
 Generating movies for the user comes down to user's choice on what attribute he/she would prefer more. To establish such preferences, the schematic below shows how the code is structured:
