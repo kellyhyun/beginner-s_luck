@@ -15,8 +15,9 @@ In order to make sure this code runs on your own laptop, there are a couple of t
 
 1. Download chromedriver: https://chromedriver.chromium.org/downloads. Make sure you get the right version that corresponds to your chrome browser!
 3. Navigate to one of our files: seleniumMain.py and change line 18 to s = Service("Your/Chromedriver/Path")
-4. Navigate to line 44 of the same file. You may have to adjust the request header depending on your browser. Here is a link to instructions on how to find your own http header. https://mkyong.com/computer-tips/how-to-view-http-headers-in-google-chrome/#:~:text=To%20view%20the%20request%20or,displayed%20on%20the%20right%20panel.
-5. Once those are completed, you're free to go! Run mainKivy.py, our main code.
+4. You may have to adjust the request header depending on your browser. Here is a link to instructions on how to find your own http header. https://mkyong.com/computer-tips/how-to-view-http-headers-in-google-chrome/#:~:text=To%20view%20the%20request%20or,displayed%20on%20the%20right%20panel.
+5. Once you get your http header, navigate to line 44 of the same file and change it to headers = {'User-Agent': 'Your http header'}
+6. Once those are completed, you're free to go! Run mainKivy.py, our main code.
 
 Note that our program takes a couple of minutes to run. While the GUI shows "loading," feel free to go grab a cup of water and get ready for a movie!
 
