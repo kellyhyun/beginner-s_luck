@@ -22,12 +22,14 @@ preferencesImportance = {1:"", 2:"", 3:"", "valid":False}
 Window.maximize()
 
 ##FOR TESTING PURPOSES##
-dictionaryPreferences = {"valid": True, "maxtime": 170, "mintime":170, "genres":["Comedy"], "minyear":2015, "maxyear": 2022, "maxrating":8.5, "minrating":8.4}
-preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":True}
+# dictionaryPreferences = {"valid": True, "maxtime": 170, "mintime":170, "genres":["Comedy"], "minyear":2015, "maxyear": 2022, "maxrating":8.5, "minrating":8.4}
+# preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":True}
 
 
 class MainWindow(Screen):
-    pass
+    def sendBack(self):
+        global back
+        back = "main"
 
 class SecondWindow(Screen):
     genrecontainer = ObjectProperty()
@@ -180,6 +182,10 @@ class ThirdWindow(Screen):
     prefList = []
     errorString = ""
     
+    def sendBack(self):
+        global back
+        back = "importance"
+    
     def popup(self):
         global dictionaryPreferences
         layout = GridLayout(cols = 1, padding = 10)
@@ -271,6 +277,10 @@ class FourthWindow(Screen):
     mList = []
     count = 1
     global dictionaryTop
+    
+    def returnBack (self):
+        global back
+        return back
     
     def returnInitial(self):
         global preferencesImportance

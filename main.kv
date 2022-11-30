@@ -41,6 +41,7 @@ WindowManager:
         Button:
             text: "Results from previously set inputs."
             on_release:
+                root.sendBack()
                 app.root.current = "results" 
                 root.manager.transition.direction = "left"
 
@@ -70,7 +71,7 @@ WindowManager:
             pos_hint: {"center_x": 0.5, "top": 0.785 }
             
             Label:
-                text: "What genre would you like? (for best results, choose 1 - 2)"
+                text: "What genre would you like? (Choose 1-3)"
                 
         GridLayout:
             id: genrecontainer
@@ -354,6 +355,8 @@ WindowManager:
                     if move: \
                     app.root.current = "results" 
                     if move: \
+                    root.sendBack()
+                    if move: \
                     root.manager.transition.direction = "left"
                     else: \
                     root.popup2()
@@ -417,7 +420,8 @@ WindowManager:
             Button:
                 text: "Back"
                 on_release:
-                    app.root.current = "importance"
+                    back = root.returnBack()
+                    app.root.current = back
                     root.manager.transition.direction = "right"
                     
         GridLayout:
