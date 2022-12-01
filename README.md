@@ -50,6 +50,34 @@ Kivy is an open source GUI development package that allows users to build an app
 ### Miscellaneous
 While this isn't considered a package, IMDB database was downloaded to facilitate the filtering process of the code when searching for movies. This significantly reduces the runtime of the code as it reduces the amount of webscraping that needs to take place to gather all the necessary information. The csv file of the database can be found in the file labeled 'FinalDatabase-MovieOnly.csv'
 
+## Creating our Database (creatingDatabase.py)
+
+### IMDB Databases
+All information from our finalDatabase.csv are taken from IMDB datasets found here: https://datasets.imdbws.com/.
+The file creatingDatabase.py is separated into three sections because the IMDB datasets are large and difficult to work with all at once. 
+If running this file on your machine, be sure to change the file names of the datasets. 
+```
+First Section:
+  title.basics.tsv.gz and title.ratings.tsv.gz from the IMDB datasets are used for this section.
+  Create database with columns that are specific to each title. 
+  Here we filtered out titles that have super small runtimes, titles that are not movies, and titles with fewer than 10,000 votes because we did not want to include obsure movie titles. 
+  
+  The columns are as follows: 
+    tconst - unique alphanumeric identifier [taken from title.basics and title.ratings]
+    titleType - type of format of the title (movie, short, tv-show, etc.) [taken from title.basics]
+    primaryTitle - more popular title [taken from title.basics]
+    startYear - release year of the title [taken from title.basics]
+    runtimeMinutes - runtime of title [taken from title.basics]
+    genres - has up to three genres associated with this title [taken from title.basics]
+    averageRating - weighted average of individual user ratings [taken from title.ratings]
+    numVotes - number of votes the title has recieved [taken from title.ratings]
+
+Second Section:
+
+Third Section:
+
+```
+
 ## Functions
 
 ### Basics
@@ -61,12 +89,13 @@ Movie Name
 ```
 Output:
 ```
-Director
-Average Rating
-Number of Votes
-Runtime
 Summary
-Trailer link
+Runtime
+Rating (Votes)
+Year 
+Genre
+Crew
+Trailer Link
 ```
 
 ### Runtime?
