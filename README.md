@@ -73,8 +73,18 @@ First Section:
     numVotes - number of votes the title has recieved [taken from title.ratings]
 
 Second Section:
+  title.principals.tsv (connecting all names to titles), name.basics.tsv, and the database that were created in section 1 were used to create a database of what the crew in each movie did and their names. 
+  This section creates a database that has the movie in as many rows as the number of people in the crew. 
 
 Third Section:
+  The databases from sections 1 and 2 are used for this section.
+  We read db2.csv and drop some columns (such as birthYear, deathYear, job, etc.) because they are unneeded and will increase the speed this section. 
+  We then put the names and categories (roles) of the crew in a list, where the indexes still match between the two for all actors, actresses, and directions. These lists are put in their own databases and then merged with the database from section 1. 
+    For example, the director of Inception is Christopher Nolan, so his name is in the second index of the names list and 'director' is in the second index of the category list. 
+ 
+ The columns added are as follows:
+    names - list of the names of all the crew [taken from name.basics and title.principals]
+    categories - list of all categories of crew members [taken from name.basics and title.principals]
 
 ```
 
