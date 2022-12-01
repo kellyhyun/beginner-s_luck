@@ -206,7 +206,8 @@ Third Section:
 
 ```
 
-## Understanding Selenium [Selenium_Test_and_Demos]
+## Understanding Selenium and BS4 [Selenium_Test_and_Demos]
+This file allows the reader to understand a bit more about how Selenium and bs4. Using this, the reader may determine that they would like to scrape more from the website for things such as trivia and motion picture rating (ie. PG). The user can also further the script by allowing navigation to the parent's guide for each movie. 
 
 ## Limitations and Future work
 While the code allows for a few functionalities that generates numerous outputs, there are still areas for improvement. Some of the areas that can be improved are as follows:
