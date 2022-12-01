@@ -28,7 +28,7 @@ Selenium is a web scraping package that is most commonly used in complex project
 To install Selenium, use the following installation code:
 
 ```
-pip install -U selenium
+pip install selenium
 ```
 
 NOTE: In order to utilize Selenium, user needs to download Chromedriver in order to run the codes related to Selenium.
