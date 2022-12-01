@@ -40,7 +40,6 @@ s = Service("appropriate pathname")
 ```
 
 The link to download Chromedriver can be found here: https://chromedriver.chromium.org/downloads
-
 ### BeautifulSoup4
 BeautifulSoup4, or BS4, is another web scraping package that is known to be more efficient for smaller projects. BS4 tends to run a bit quicker than Selenium when dealing with a static webpage. We chose BS4 over Selenium to scrape information from the destination pages' html codes to leverage this strength.
 To install Beautifulsoup4, use the following installation code:
@@ -48,7 +47,6 @@ To install Beautifulsoup4, use the following installation code:
 ```
 pip install beautifulsoup4
 ```
-
 ### Requests
 Request is a simple HTTP library package used to send HTTP requests via python.
 To install Requests, use the following installation code:
@@ -56,7 +54,6 @@ To install Requests, use the following installation code:
 ```
 pip install requests
 ```
-
 ### Pandas
 We all know about Pandas. Our group used pandas to filter through the entire iMDB film database to create our own, more selective database of movies. Each time the code is run, we will sort through the database using pandas to find the best movies as well!
 To install pandas, use the following installation code:
@@ -64,7 +61,6 @@ To install pandas, use the following installation code:
 ```
 pip install pandas
 ```
-
 ### Kivy
 Kivy is an open source GUI development package that allows users to build an app once and be used across all platforms. To utilize this package, the user must create both python and kivy code in order to create applications that are usable. When running the code on an IDE, make sure to restart kernel every time after use to ensure minimal error and issue. 
 To install kivy, use the follwoing installation code:
@@ -76,36 +72,43 @@ pip install kivy
 ### Miscellaneous
 While this isn't considered a package, IMDB database was downloaded to facilitate the filtering process of the code when searching for movies. This significantly reduces the runtime of the code as it reduces the amount of webscraping that needs to take place to gather all the necessary information. The csv file of the database can be found in the file labeled 'finalDatabase.csv.' More on how we created this database is in a later section of this ReadMe file.
 
-## Functions
+## How Our Code Works
 
 ### Basics
 The most basic building block of our projects looks like this (all data based on iMDB).
 
 Input:
 ```
-Movie Name
+User Preferences:
+  Maximum Runtime (Hard Cutoff)
+  Minimum Runtime
+  Desired Genres
+  Maximum Rating
+  Minimum Rating
 ```
 Output:
 ```
+Movie Title
 Summary
 Runtime
 Rating (Votes)
-Year 
+Year of Release
 Genre
 Crew
 Trailer Link
 ```
 
-### Runtime?
+### Runtime Weighted the Most
 From now on, you'll always be able to satisfyingly finish a movie before you have to head out. The maximum runtime preferred will be set as a hard limit, so you'll definitely be able to finish the movie before you leave. 
 ```
 Otherwise:
-  Weight = (1 - (| Movie Runtime - Average Runtime |) / (Total Difference of Runtimes)) * 200
+  Weight = (1 - (| Movie Runtime - Average Runtime |) / (Total Difference of Runtimes)) * (Runtime Weight)
     Where 422 is the total difference of maximum and minimum possible runtimes.
-  200 is the weight we decided for the runtime because it is the most important preference for our app. 
+    The runtime weight we decided was 5 because the maximum runtime is already a hard cutoff. 
 ```
+We will run the top 1000 results from this weighting for the next part of our preference sorting.
 
-### Preference Structuring
+### Preference Sorting
 Generating movies for the user comes down to user's choice on what attribute he/she would prefer more. To establish such preferences, the schematic below shows how the code is structured:
 ```
 Setting precedence:
