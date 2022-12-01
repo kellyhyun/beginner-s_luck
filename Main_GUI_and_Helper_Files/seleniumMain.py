@@ -1,5 +1,3 @@
-# Chris's code for presentation demo
-
 import requests
 from bs4 import BeautifulSoup
 import requests
@@ -15,6 +13,7 @@ import pandas as pd
 # ----------------------    WEB SCRAPING    -------------------------
 # imdb url
 url= 'https://www.imdb.com/feature/genre/?ref_=nv_ch_gr'
+## ----- NEEDS TO BE CHANGED BY USER ----- ##
 s = Service("/Users/kelly/ME396P/chromedriver")
 options = Options()
 # --------- window stays open when code runs
@@ -74,37 +73,3 @@ def scrape_movie_info_imdb(movie_name):
 
     string3 = f"Summary: {movie_summary}\n"
     return string3, string4 #title, string1, string2
-
-
-# def scrape_movie_info_database(movie_name):
-#     r = database.loc[database["primaryTitle"] == movie_name]["averageRating"].to_string(index=False)
-#     n = database.loc[database["primaryTitle"] == movie_name]["numVotes"].to_string(index=False)
-#     runtime = database.loc[database["primaryTitle"] == movie_name]["runtimeMinutes"].to_string(index=False)
-#     string5 = f'Rating: {r} ({n} votes)\n'
-#     string6 = f'Runtime: {runtime} min\n'
-#     return string5, string6
-
-
-# def all_together(movie):
-#     t,s1,s2,s3,s4 = scrape_movie_info_imdb(movie)
-#     s5,s6 = scrape_movie_info_database(t)
-#     final_output = s1+s2+s5+s6+s3+s4
-#     print(final_output)
-#     return final_output
-
-
-# if __name__ == '__main__':
-#     list_of_movies = []
-#     search_movie = input("What movie would you like information about?")
-#     list_of_movies.append(search_movie)
-#     done = False
-#     while not done:
-#         keep_going = input("Anything else? [y/n]")
-#         if keep_going == 'n':
-#             done = True
-#         if keep_going == 'y':
-#             search_movie = input("What movie would you like information about?")
-#             list_of_movies.append(search_movie)
-#     print(list_of_movies)
-#     for movie in list_of_movies:
-#         final_output = all_together(movie)
