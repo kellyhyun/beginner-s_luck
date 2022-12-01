@@ -79,8 +79,9 @@ While this isn't considered a package, IMDB database was downloaded to facilitat
 The most basic building block of our projects looks like this (all data based on iMDB).
 Note that these will be stored in dictionaries.
 Input:
-```
+
 User Preferences:
+```
   Maximum Runtime (Hard Cutoff)
   Minimum Runtime
   Desired Genres
@@ -88,7 +89,9 @@ User Preferences:
   Minimum Rating
   Maximum Year of Release
   Minimum Year of Release
+```
 User Priorities:
+```
   Runtime is already built in to have the most importance. The weighing of this is included in the next section.
   The order of user priorities need to be inputted. (Ex. 1st = Year, 2nd = Rating, 3rd = Genres)
 ```
@@ -114,8 +117,9 @@ Please look at the in-line comments for further information.
 
 ### Runtime Weighted the Most (finalSort.py)
 From now on, you'll always be able to satisfyingly finish a movie before you have to head out. The maximum runtime preferred will be set as a hard limit, so you'll definitely be able to finish the movie before you leave. 
-```
+
 Otherwise:
+```
   Weight = (1 - (| Movie Runtime - Average Runtime |) / (Total Difference of Runtimes)) * (Runtime Weight)
     Where 422 is the total difference of maximum and minimum possible runtimes.
     The runtime weight we decided was 5 because the maximum runtime is already a hard cutoff. 
@@ -125,23 +129,23 @@ We will run the top 1000 results from this weighting for the next part of our pr
 
 ### Preference Sorting (finalSort.py)
 Generating movies for the user comes down to user's choice on what attribute he/she would prefer more. To establish such preferences, the schematic below shows how the code is structured:
-```
-Setting precedence:
 
+Setting precedence:
+```
 1st choice → Multiply the factor by 3
 2nd choice → Multiply the factor by 2
 3rd choice → Multiply the factor by 1
-
+```
 Genre:
-
+```
 Total = len(choice_list)
 If chosen movie has all choices:
   Weight of each genre = 1
 Else:
   Weight =  # of genres desired by user that movie also has / Total
-
+```
 Year:
-
+```
 If the chosen year is within range:
   Weight = 1 
 Else:
@@ -149,9 +153,9 @@ Else:
   Then
   Weight = 1 - ( abs(Movie_year - Mean_range) / 107 )
     Where, max difference allowed for movies in years = 107. 
-    
+```
 Rating: 
-
+```
 If the chosen rating is within range:
   Weight = 1 
 Else:
@@ -159,10 +163,10 @@ Else:
   Then
   Weight = 1 - ( abs(Movie_rating - Mean_rating) / 10 )
     Where, max difference allowed for movies in rating = 10. 
-    
+```
     
 Weights are added together and sorted to list the movies best suited to the user.
-```    
+  
 Once the precedence is set, the list of movies suggested should follow the structure above and output them in a correct order.
 
 ### Webscraping (seleniumMain.py)
@@ -174,13 +178,14 @@ Then, it looks for the trailer link using Selenium.
 All information from our finalDatabase.csv are taken from IMDB datasets found here: https://datasets.imdbws.com/. Since the database used in this program is local, note that it may not contain very recently released movies depending on when you created the database.
 The file creatingDatabase.py is separated into three sections because the IMDB datasets are large and difficult to work with all at once. 
 If running this creatingDatabase.py on your machine, be sure to change the file paths of the IMDB datasets to fit you machine. 
-```
+
 First Section:
+```
   title.basics.tsv.gz and title.ratings.tsv.gz from the IMDB datasets are used for this section.
   Create database with columns that are specific to each title. 
   Here we filtered out titles that have super small runtimes, titles that are not movies, and titles with fewer than 10,000 votes 
   because we did not want to include obsure movie titles. 
-  
+
   The columns are as follows: 
     tconst - unique alphanumeric identifier [taken from title.basics and title.ratings]
     titleType - type of format of the title (movie, short, tv-show, etc.) [taken from title.basics]
