@@ -14,12 +14,13 @@ Using packages such as [Selenium]([url](https://www.selenium.dev/)) and [Beautif
 In order to make sure this code runs on your own laptop, there are a couple of things that you may have to tweak. Make sure you get this right, or it will continue to pop errors!
 
 1. Download chromedriver: https://chromedriver.chromium.org/downloads. Make sure you get the right version that corresponds to your chrome browser!
+2. Download all of the packages specified in the "Packages Used" section. 
 3. Navigate to one of our files: seleniumMain.py and change line 18 to s = Service("Your/Chromedriver/Path")
 4. You may have to adjust the request header depending on your browser. Here is a link to instructions on how to find your own http header. https://mkyong.com/computer-tips/how-to-view-http-headers-in-google-chrome/#:~:text=To%20view%20the%20request%20or,displayed%20on%20the%20right%20panel.
-5. Once you get your http header, navigate to line 44 of the same file and change it to headers = {'User-Agent': 'Your http header'}
+5. Once you get your http header, navigate to line 45 of the same file and change it to headers = {'User-Agent': 'Your http header'}
 6. Once those are completed, you're free to go! Run mainKivy.py, our main code.
 
-Note that our program takes a couple of minutes to run. While the GUI shows "loading," feel free to go grab a cup of water and get ready for a movie!
+Note that our program takes a couple of minutes to run. While the GUI shows "loading," feel free to go grab some popcorn and get ready for a movie!
 
 ## Packages used
 
@@ -63,7 +64,7 @@ pip install pandas
 ```
 ### Kivy
 Kivy is an open source GUI development package that allows users to build an app once and be used across all platforms. To utilize this package, the user must create both python and kivy code in order to create applications that are usable. When running the code on an IDE, make sure to restart kernel every time after use to ensure minimal error and issue. 
-To install kivy, use the follwoing installation code:
+To install kivy, use the following installation code:
 
 ```
 pip install kivy
@@ -191,11 +192,11 @@ Third Section:
 ### Limitations and Future work
 While the code allows for a few functionalities that generates numerous outputs, there are still areas for improvement. Some of the areas that can be improved are as follows:
 
-1. Implement a feature where trailer link generated can be clickable so that it can be directed to a webpage with the trailer loaded for viewing. Another method to approach this concept is to preload the trailer videos into the GUI, where the user has the option to directly click on the corresponding video to view. 
+1. Implement a feature where trailer link generated can be clickable so that it can be directed to a webpage with the trailer loaded for viewing. Another method to approach this concept is to preload the trailer videos into the GUI, where the user has the option to directly click on the corresponding video to view. For this, another GUI should be used as Kivy does not work well natively with hyperlinks.
 
 2. Add a feature where the runtime, rating, and year attributes that be toggled with sliding bars. This way, the user would not have to input the values manually.
 
-3. Include an option, where it asks the user to click on a hyperlink that takes him/her directly to the movie's IMDB webpage for further information.
+3. Include an option, where it asks the user to click on a hyperlink that takes him/her directly to the movie's IMDB webpage for further information. Again, for this, another GUI should be used as Kivy does not work well natively with hyperlinks.
 
 4. Utilize lxml parser instead of html.parser to further increase the webscraping speed.
 
