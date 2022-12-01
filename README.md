@@ -86,6 +86,11 @@ User Preferences:
   Desired Genres
   Maximum Rating
   Minimum Rating
+  Maximum Year of Release
+  Minimum Year of Release
+User Priorities:
+  Runtime is already built in to have the most importance. The weighing of this is included in the next section.
+  The order of user priorities need to be inputted. (Ex. 1st = Year, 2nd = Rating, 3rd = Genres)
 ```
 Output:
 ```
