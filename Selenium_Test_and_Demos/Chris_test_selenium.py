@@ -15,6 +15,8 @@ import pandas as pd
 # ----------------------    WEB SCRAPING    -------------------------
 # imdb url
 url= 'https://www.imdb.com/feature/genre/?ref_=nv_ch_gr'
+
+# INSERT YOUR CHROMEDRIVER PATH
 s = Service("/Users/kelly/ME396P/chromedriver")
 # s = Service("/Users/Christopher/Desktop/ME396P/chromedriver")
 options = Options()
@@ -24,9 +26,9 @@ options.add_experimental_option("detach", True)
 # options.add_argument("--headless")
 driver = webdriver.Chrome(service=s, options=options)
 
-database = pd.read_csv('ourDatabase.csv')
+database = pd.read_csv('../Creating_Movie_Database/FinalDatabase.csv')
 
-# --------------------  GETTING MOVIE INFO -----------------
+# --------------------  GETTING MOVIE INFO FROM IMDB-----------------
 def scrape_movie_info_imdb(movie_name):
     # ----------------  SET UP CHROMEDRIVER ----------------
     driver.get("https://www.imdb.com/find?q=" + movie_name + "&ref_=nv_sr_sm")
@@ -40,12 +42,11 @@ def scrape_movie_info_imdb(movie_name):
 
     # Once we get to movie info page, use BS4 to scrape info
     current_url = driver.current_url
-
+    # INSERT YOUR HTTP HEADER - CHECK README.MD
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
     html = requests.get(current_url, headers=headers)
     html = html.text
     soup = BeautifulSoup(html, "html.parser")
-    # print(soup.prettify())
 
     # ---------------   LOOK FOR DATA ------------------------
     print('-------------------------------------------------------------------------------------')
@@ -75,10 +76,10 @@ def scrape_movie_info_imdb(movie_name):
     string2 = f"Director: {director}\n"
     string3 = f"Summary: {movie_summary}\n"
 
-
     return title, string1, string2, string3, string4
 
 
+# --------------------- GETTING MOVIE INFO FROM LOCAL DATABASE -----------------
 def scrape_movie_info_database(movie_name):
     r = database.loc[database["primaryTitle"] == movie_name]["averageRating"].to_string(index=False)
     n = database.loc[database["primaryTitle"] == movie_name]["numVotes"].to_string(index=False)
