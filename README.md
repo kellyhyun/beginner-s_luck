@@ -25,6 +25,11 @@ Note that our program takes a couple of minutes to run. While the GUI shows "loa
 
 ### Selenium
 Selenium is a web scraping package that is most commonly used in complex projects. In our project, we use Selenium to navigate through iMDB websites. In more detail, we use Selenium 4*** to automate the searching and clicking actions.
+To install Selenium, use the following installation code:
+
+```
+pip install -U selenium
+```
 
 NOTE: In order to utilize Selenium, user needs to download Chromedriver in order to run the codes related to Selenium.
 When downloading the driver, make sure to download the correct version corresponding to your chrome.
@@ -38,9 +43,20 @@ The link to download Chromedriver can be found here: https://chromedriver.chromi
 
 ### BeautifulSoup4
 BeautifulSoup4, or BS4, is another web scraping package that is known to be more efficient for smaller projects. BS4 tends to run a bit quicker than Selenium when dealing with a static webpage. We chose BS4 over Selenium to scrape information from the destination pages' html codes to leverage this strength.
+To install Beautifulsoup4, use the following installation code:
+
+```
+pip install beautifulsoup4
+```
 
 ### Requests
 Request is a simple HTTP library package used to send HTTP requests via python.
+To install Requests, use the following installation code:
+
+```
+python -m pip install requests
+```
+
 ### Pandas
 We all know about Pandas. Our group used pandas to filter through the entire iMDB film database to create our own, more selective database of movies. Each time the code is run, we will sort through the database using pandas to find the best movies as well!
 
