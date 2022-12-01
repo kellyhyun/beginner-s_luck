@@ -27,6 +27,7 @@ Window.maximize()
 
 
 class MainWindow(Screen):
+    # change where back button goes from results page
     def sendBack(self):
         global back
         back = "main"
@@ -37,6 +38,9 @@ class SecondWindow(Screen):
     errorList = []
     global dictionaryPreferences
     
+    # Here will be a pop-up showing what is wrong (if anything) with the user preferences inputs
+    # we see if something is wrong by looking at the length of the error list
+    # pop up is for when user tries to save preferences
     def popup(self):
         global dictionaryPreferences
         layout = GridLayout(cols = 1, padding = 10)
@@ -61,7 +65,7 @@ class SecondWindow(Screen):
         closeButton.bind(on_press = popup.dismiss)
         self.errorList = []
         
-        
+    # function to save user input times if valid, if not we add a string to the error list
     def saveTimes(self):
         maxtext = self.ids.maxruntime.text
         mintext = self.ids.minruntime.text
@@ -88,7 +92,8 @@ class SecondWindow(Screen):
                 dictionaryPreferences["mintime"] = minnum
             except:
                 self.errorList.append("The maximum runtime should be larger or equal to the minimum runtime.")
-
+    
+    # function to save user input genre if valid, if not we add a string to the error list            
     def saveGenre(self):
         global dictionaryPreferences
         self.choiceList = []
@@ -128,7 +133,8 @@ class SecondWindow(Screen):
                 dictionaryPreferences["minyear"] = minnum
             except:
                 self.errorList.append("The maximum year should be larger or equal to the minimum year.")
-                
+    
+    # function to save user input ratings if valid, if not we add a string to the error list              
     def saveRatings(self):
         maxtext = self.ids.maxrating.text
         mintext = self.ids.minrating.text
@@ -155,15 +161,18 @@ class SecondWindow(Screen):
                 dictionaryPreferences["minrating"] = minnum
             except:
                 self.errorList.append("The maximum rating should be larger or equal to the minimum rating.")
-    
+                
+    # function to return validity of user preferences - for the pop up, used in main.kv
     def returnBoolPref(self):
         global dictionaryPreferences
         return dictionaryPreferences["valid"]
-
+    
+    # function to return validity of user preferences importances - for the pop up, used in main.kv
     def returnBoolImport(self):
         global preferencesImportance
         return preferencesImportance["valid"]
     
+    # second popup for the next button - it goes next if the valid
     def popup2(self):
         layout = GridLayout(cols = 1, padding = 10)
         popupLabel = Label(text = "Check and save user inputs before continuing.")
@@ -176,16 +185,19 @@ class SecondWindow(Screen):
         # Attach close button press with popup.dismiss action
         closeButton.bind(on_press = popup.dismiss)
         self.errorList = []
-    
+  
+# saving importance of user preferences 
 class ThirdWindow(Screen):
     global preferencesImportance
     prefList = []
     errorString = ""
     
+    # change where back button goes from results page
     def sendBack(self):
         global back
         back = "importance"
     
+    # pop up when user is saving
     def popup(self):
         global dictionaryPreferences
         layout = GridLayout(cols = 1, padding = 10)
@@ -207,6 +219,7 @@ class ThirdWindow(Screen):
         closeButton.bind(on_press = popup.dismiss)
         self.errorList = []
     
+    # we try to set the importance of the user preferences
     def determineImportance(self):
         global preferencesImportance
         self.prefList = []
@@ -233,7 +246,8 @@ class ThirdWindow(Screen):
         except AssertionError:
             preferencesImportance = {1:"", 2:"", 3:"", "valid": False}
             self.errorString = "Rank your preferences. No duplicates are allowed."
-            
+    
+    # second pop up for when the user tries to go next
     def popup2(self):
         layout = GridLayout(cols = 1, padding = 10)
         global dictionaryPreferences
@@ -258,14 +272,17 @@ class ThirdWindow(Screen):
         closeButton.bind(on_press = popup.dismiss)
         self.errorList = []         
     
+    # sees if user preferences are valid
     def returnBoolPref(self):
         global dictionaryPreferences
         return dictionaryPreferences["valid"]
     
+    # sees if user importance of preferences is valid
     def returnBoolImport(self):
         global preferencesImportance
         return preferencesImportance["valid"]
     
+# this is where the results screen is 
 class FourthWindow(Screen): 
     global preferencesImportance
     global dictionaryPreferences 
@@ -278,10 +295,13 @@ class FourthWindow(Screen):
     count = 1
     global dictionaryTop
     
+    # sets the back button 
     def returnBack (self):
         global back
         return back
     
+    # initializing for load button - it has the top list, and refreshed, and the list of movies for testing purposes
+    # uses final sort
     def returnInitial(self):
         global preferencesImportance
         global dictionaryPreferences
@@ -298,6 +318,8 @@ class FourthWindow(Screen):
         except:
             print("error")
     
+    # this is the helper function for repeatRefresh
+    # uses final sort
     def repeathelper(self, nextdf):
         global preferencesImportance
         global dictionaryPreferences
@@ -309,6 +331,7 @@ class FourthWindow(Screen):
         except:
             print("error")
     
+    # allows refresh button to be repeated
     def repeatRefresh(self):
         global preferencesImportance
         global dictionaryPreferences
@@ -318,7 +341,8 @@ class FourthWindow(Screen):
         global og
         global refreshedInt
         new = refreshed.copy()
-        if self.count != 10:
+        # we will refresh after we use all 1000 instances that we had from the list - look at finalSort line 83 for reference
+        if self.count != 100:
             self.repeathelper(new)
             self.count += 1
             self.ids.statusLabel.text = "If you did not receive optimal results, please increase your range of runtime.\nYou may refresh to receive more movie recommendations."
@@ -330,6 +354,7 @@ class FourthWindow(Screen):
             self.ids.statusLabel.text = newtext
             self.count = 1
     
+    #function saves each of the parameters for the top 10
     def saveTenMovies(self):
         global dictionaryMovies
         global top
@@ -350,6 +375,7 @@ class FourthWindow(Screen):
             print(dictionary)
         return listMovie
     
+    # runs the parameters for each of the movies in the top ten list
     def returnStringText(self):
         global top
         global mList
@@ -383,6 +409,7 @@ class FourthWindow(Screen):
             string = string + listMovie[i]['trailer'] + '\n'
         return string    
     
+    # changes the return label to the new string made by the above function
     def returnLabelText(self):
         global top
         printThis = self.returnStringText()
