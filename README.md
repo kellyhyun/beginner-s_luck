@@ -17,9 +17,8 @@ In order to make sure this code runs on your own laptop, there are a couple of t
 2. Download all of the packages specified in the "Packages Used" section. 
 3. Navigate to the Main_GUI_and_Helper_Files directory. There are 6 files there.
 4. Navigate to one of our files: seleniumMain.py and change line 18 to s = Service("Your/Chromedriver/Path")
-5. You may have to adjust the request header depending on your browser. Here is a link to instructions on how to find your own http header. https://mkyong.com/computer-tips/how-to-view-http-headers-in-google-chrome/#:~:text=To%20view%20the%20request%20or,displayed%20on%20the%20right%20panel.
-6. Once you get your http header, navigate to line 45 of the same file and change it to headers = {'User-Agent': 'Your http header'}
-7. Once those are completed, you're free to go! Run mainKivy.py, our main code.
+5. You may have to adjust the request header depending on your browser. Here is a link to instructions on how to find your own http header. https://mkyong.com/computer-tips/how-to-view-http-headers-in-google-chrome/#:~:text=To%20view%20the%20request%20or,displayed%20on%20the%20right%20panel. Once you get your http header, navigate to line 45 of the same file and change it to headers = {'User-Agent': 'Your http header'}
+6. Once those are completed, you're free to go! Run mainKivy.py, our main code.
 
 Note that our program takes a couple of minutes to run. While the GUI shows "loading," feel free to go grab some popcorn and get ready for a movie!
 
@@ -78,7 +77,7 @@ While this isn't considered a package, IMDB database was downloaded to facilitat
 
 ### Basics
 The most basic building block of our projects looks like this (all data based on iMDB).
-
+Note that these will be stored in dictionaries.
 Input:
 ```
 User Preferences:
@@ -157,6 +156,11 @@ Else:
 Weights are added together and sorted to list the movies best suited to the user.
 ```    
 Once the precedence is set, the list of movies suggested should follow the structure above and output them in a correct order.
+
+### Webscraping
+Selenium main initialized what is needed to use the chromedriver, Selenium, and bs4.
+It then has a function that finds the link that the movie is using the tconst (a unique alphanumeric identifier for each title). This allows us to find the correct movie even if the titles of some movies are the same. 
+Then, it looks for the trailer link using Selenium. 
 
 ## Creating our Database (creatingDatabase.py)
 
