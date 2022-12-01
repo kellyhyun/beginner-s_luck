@@ -8,7 +8,7 @@ import pandas as pd
 import seleniumMain
 
 def initialize(dictionaryPreferences):
-    df = pd.read_csv('FinalDatabase-MovieOnly.csv', sep=',', header=0, low_memory = False)
+    df = pd.read_csv('FinalDatabase.csv', sep=',', header=0, low_memory = False)
     df['runtimeMinutes'] = pd.to_numeric(df['runtimeMinutes'])
     df['numVotes'] = pd.to_numeric(df['numVotes'])
     df["category"] = df["category"].str.replace("[' ]","")
@@ -23,9 +23,6 @@ def initialize(dictionaryPreferences):
     df['numVotes'] = pd.to_numeric(df['numVotes'])
     df.insert(len(df.columns),"weight", 0)
     df['genres'] = df.genres.apply(lambda x: x[0:].split(','))
-    # mintime = dictionaryPreferences["mintime"]
-    # maxtime = dictionaryPreferences["maxtime"]
-    # df = df[(df["runtimeMinutes"] <= maxtime) & (df["runtimeMinutes"]>=mintime)]
     return df
 
 def sortTime (newdf, dictionaryPreferences):
