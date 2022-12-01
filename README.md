@@ -74,45 +74,7 @@ pip install kivy
 ```
 
 ### Miscellaneous
-While this isn't considered a package, IMDB database was downloaded to facilitate the filtering process of the code when searching for movies. This significantly reduces the runtime of the code as it reduces the amount of webscraping that needs to take place to gather all the necessary information. The csv file of the database can be found in the file labeled 'finalDatabase.csv'
-
-## Creating our Database (creatingDatabase.py)
-
-### IMDB Databases
-All information from our finalDatabase.csv are taken from IMDB datasets found here: https://datasets.imdbws.com/.
-The file creatingDatabase.py is separated into three sections because the IMDB datasets are large and difficult to work with all at once. 
-If running this file on your machine, be sure to change the file names of the datasets. 
-```
-First Section:
-  title.basics.tsv.gz and title.ratings.tsv.gz from the IMDB datasets are used for this section.
-  Create database with columns that are specific to each title. 
-  Here we filtered out titles that have super small runtimes, titles that are not movies, and titles with fewer than 10,000 votes because we did not want to include obsure movie titles. 
-  
-  The columns are as follows: 
-    tconst - unique alphanumeric identifier [taken from title.basics and title.ratings]
-    titleType - type of format of the title (movie, short, tv-show, etc.) [taken from title.basics]
-    primaryTitle - more popular title [taken from title.basics]
-    startYear - release year of the title [taken from title.basics]
-    runtimeMinutes - runtime of title [taken from title.basics]
-    genres - has up to three genres associated with this title [taken from title.basics]
-    averageRating - weighted average of individual user ratings [taken from title.ratings]
-    numVotes - number of votes the title has recieved [taken from title.ratings]
-
-Second Section:
-  title.principals.tsv (connecting all names to titles), name.basics.tsv, and the database that were created in section 1 were used to create a database of what the crew in each movie did and their names. 
-  This section creates a database that has the movie in as many rows as the number of people in the crew. 
-
-Third Section:
-  The databases from sections 1 and 2 are used for this section.
-  We read db2.csv and drop some columns (such as birthYear, deathYear, job, etc.) because they are unneeded and will increase the speed this section. 
-  We then put the names and categories (roles) of the crew in a list, where the indexes still match between the two for all actors, actresses, and directions. These lists are put in their own databases and then merged with the database from section 1. 
-    For example, the director of Inception is Christopher Nolan, so his name is in the second index of the names list and 'director' is in the second index of the category list. 
- 
- The columns added are as follows:
-    names - list of the names of all the crew [taken from name.basics and title.principals]
-    categories - list of all categories of crew members [taken from name.basics and title.principals]
-
-```
+While this isn't considered a package, IMDB database was downloaded to facilitate the filtering process of the code when searching for movies. This significantly reduces the runtime of the code as it reduces the amount of webscraping that needs to take place to gather all the necessary information. The csv file of the database can be found in the file labeled 'finalDatabase.csv.' More on how we created this database is in a later section of this ReadMe file.
 
 ## Functions
 
@@ -185,6 +147,43 @@ Weights are added together and sorted to list the movies best suited to the user
 ```    
 Once the precedence is set, the list of movies suggested should follow the structure above and output them in a correct order.
 
+## Creating our Database (creatingDatabase.py)
+
+### IMDB Databases
+All information from our finalDatabase.csv are taken from IMDB datasets found here: https://datasets.imdbws.com/.
+The file creatingDatabase.py is separated into three sections because the IMDB datasets are large and difficult to work with all at once. 
+If running this file on your machine, be sure to change the file names of the datasets. 
+```
+First Section:
+  title.basics.tsv.gz and title.ratings.tsv.gz from the IMDB datasets are used for this section.
+  Create database with columns that are specific to each title. 
+  Here we filtered out titles that have super small runtimes, titles that are not movies, and titles with fewer than 10,000 votes because we did not want to include obsure movie titles. 
+  
+  The columns are as follows: 
+    tconst - unique alphanumeric identifier [taken from title.basics and title.ratings]
+    titleType - type of format of the title (movie, short, tv-show, etc.) [taken from title.basics]
+    primaryTitle - more popular title [taken from title.basics]
+    startYear - release year of the title [taken from title.basics]
+    runtimeMinutes - runtime of title [taken from title.basics]
+    genres - has up to three genres associated with this title [taken from title.basics]
+    averageRating - weighted average of individual user ratings [taken from title.ratings]
+    numVotes - number of votes the title has recieved [taken from title.ratings]
+
+Second Section:
+  title.principals.tsv (connecting all names to titles), name.basics.tsv, and the database that were created in section 1 were used to create a database of what the crew in each movie did and their names. 
+  This section creates a database that has the movie in as many rows as the number of people in the crew. 
+
+Third Section:
+  The databases from sections 1 and 2 are used for this section.
+  We read db2.csv and drop some columns (such as birthYear, deathYear, job, etc.) because they are unneeded and will increase the speed this section. 
+  We then put the names and categories (roles) of the crew in a list, where the indexes still match between the two for all actors, actresses, and directions. These lists are put in their own databases and then merged with the database from section 1. 
+    For example, the director of Inception is Christopher Nolan, so his name is in the second index of the names list and 'director' is in the second index of the category list. 
+ 
+ The columns added are as follows:
+    names - list of the names of all the crew [taken from name.basics and title.principals]
+    categories - list of all categories of crew members [taken from name.basics and title.principals]
+
+```
 
 ### Limitations and Future work
 While the code allows for a few functionalities that generates numerous outputs, there are still areas for improvement. Some of the areas that can be improved are as follows:
