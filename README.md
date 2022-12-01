@@ -113,6 +113,7 @@ Otherwise:
     Where 422 is the total difference of maximum and minimum possible runtimes.
     The runtime weight we decided was 5 because the maximum runtime is already a hard cutoff. 
 ```
+If within the range, the weight is automatically at 5.
 We will run the top 1000 results from this weighting for the next part of our preference sorting.
 
 ### Preference Sorting
