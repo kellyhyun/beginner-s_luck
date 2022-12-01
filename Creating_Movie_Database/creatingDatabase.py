@@ -7,7 +7,7 @@ Created on Tue Nov  1 14:52:08 2022
 import pandas as pd
 import csv
  
-# First section
+# ----------------------    First Section     --------------------
 basics = pd.read_csv(r'imdb\basics\data.tsv', sep='\t', header=0, low_memory = False)
 
 ratings = pd.read_csv(r'imdb\rating\data.tsv',sep='\t', header=0, low_memory = False)
@@ -31,19 +31,21 @@ df = df.loc[(df["titleType"] == 'movie' )]
 
 df.to_csv("db1.csv")
 
-# Second Section
+# ----------------------    Second Section     --------------------
 
 principals = pd.read_csv(r'imdb\title.principals.tsv\data.tsv', sep='\t', header=0, low_memory = False)
 
 names = pd.read_csv(r'imdb\name.basics.tsv\data.tsv', sep='\t', header=0, low_memory = False)
 
+df = pd.read_csv('db1.csv', sep=',', header=0, low_memory = False)
+
 people = df.merge(principals, left_on='tconst', right_on='tconst')
 
 people = people.merge(names, left_on="nconst", right_on='nconst')
 
-people.to_csv('df2.csv') # created to be able to run script in sections
+people.to_csv('df2.csv') 
 
-## Third Section
+# ----------------------    Third Section     --------------------
 df = pd.read_csv('db1.csv', sep=',', header=0, low_memory = False)
 
 df2 = pd.read_csv('db2.csv', sep=',', header=0, low_memory = False)
