@@ -54,14 +54,24 @@ Request is a simple HTTP library package used to send HTTP requests via python.
 To install Requests, use the following installation code:
 
 ```
-python -m pip install requests
+pip install requests
 ```
 
 ### Pandas
 We all know about Pandas. Our group used pandas to filter through the entire iMDB film database to create our own, more selective database of movies. Each time the code is run, we will sort through the database using pandas to find the best movies as well!
+To install pandas, use the following installation code:
+
+```
+pip install pandas
+```
 
 ### Kivy
 Kivy is an open source GUI development package that allows users to build an app once and be used across all platforms. To utilize this package, the user must create both python and kivy code in order to create applications that are usable. When running the code on an IDE, make sure to restart kernel every time after use to ensure minimal error and issue. 
+To install kivy, use the follwoing installation code:
+
+```
+pip install kivy
+```
 
 ### Miscellaneous
 While this isn't considered a package, IMDB database was downloaded to facilitate the filtering process of the code when searching for movies. This significantly reduces the runtime of the code as it reduces the amount of webscraping that needs to take place to gather all the necessary information. The csv file of the database can be found in the file labeled 'finalDatabase.csv'
