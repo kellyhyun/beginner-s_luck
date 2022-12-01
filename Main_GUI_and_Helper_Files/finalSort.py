@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Nov  2 20:34:22 2022
 
-@author: kelly
-"""
 import pandas as pd
 import seleniumMain
 
@@ -24,7 +20,7 @@ def initialize(dictionaryPreferences):
     df.insert(len(df.columns),"weight", 0)
     df['genres'] = df.genres.apply(lambda x: x[0:].split(','))
     return df
-
+    #initializing all the attributes from the dataframe
 def sortTime (newdf, dictionaryPreferences):
     maxtime = dictionaryPreferences['maxtime'] 
     mintime = dictionaryPreferences['mintime']
@@ -38,7 +34,15 @@ def sortTime (newdf, dictionaryPreferences):
             row["weight"] = (1 - (abs(row["runtimeMinutes"]-average)/422))*5
         newdf.loc[index,"weight"] = newdf.loc[index,"weight"] + row["weight"]
     return newdf
-
+'''
+functions sortTime(), sortYear, and sortRating follow the same sorting principle
+where it finds the mean value of the corresponding attribute
+Then, the corresponding attribute of the movie of interest is subtracted by the mean value
+And this value is divided by a specific number***
+specific number*** can be any of the following: max difference allowed for movies in (runtime, year, rating)
+Once this is found, weight of the attribute is calculated by (1 - quotient from previous calculation)
+Then the output is added to a new dataframe
+'''
 def sortGenre (weight, newdf, dictionaryPreferences):
     usergenre = dictionaryPreferences['genres'] 
     
@@ -48,6 +52,9 @@ def sortGenre (weight, newdf, dictionaryPreferences):
             if i in usergenre:
                 match += 1
         row["weight"] = match/len(usergenre)*weight
+        #everytime the genre inputted matches the described genre for each movie
+        # correlate the weight to the corresponding movie, where weight is equal to # of genres desired by user that movie also has / Total
+
         newdf.loc[index,"weight"] = newdf.loc[index,"weight"] + row["weight"]
     return newdf
 
@@ -96,6 +103,11 @@ def combineSort(newdf, preferencesImportance, dictionaryPreferences):
     newdf = newdf.sort_values(by=['weight'],ascending=False)
     return newdf
 
+'''
+Once the new dataset is created, all the attributes are combined under combineSort(), where
+each atttribute is then sorted based on their given weight.
+Weights for each attribute were calculated in their own respective functions
+'''
 def movieList (newdf, preferencesImportance, dictionaryPreferences):
     newdf = combineSort(newdf, preferencesImportance, dictionaryPreferences)
     top = newdf.head(10)
@@ -104,3 +116,7 @@ def movieList (newdf, preferencesImportance, dictionaryPreferences):
         mList.append(newdf.loc[index,"primaryTitle"])
     refreshed = newdf.iloc[10: , :]
     return top, refreshed, mList
+
+'''
+movieList() function outputs the sorted data, where it returns the top 10 movies, followed by refreshed lists 
+'''
