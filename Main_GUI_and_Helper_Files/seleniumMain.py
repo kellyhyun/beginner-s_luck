@@ -16,7 +16,7 @@ url= 'https://www.imdb.com/feature/genre/?ref_=nv_ch_gr'
 
 ## ----- NEEDS TO BE CHANGED BY USER ----- ##
 s = Service("/Users/kelly/ME396P/chromedriver")
-## ----- STOP CHANGES ----- ##
+## --------------------------------------- ##
 
 options = Options()
 # --------- window stays open when code runs
@@ -35,8 +35,9 @@ def scrape_movie_info_imdb(tconst):
 
     # use BS4 to scrape info
     current_url = driver.current_url
-
+    ## --------------------- MIGHT NEED TO BE CHANGED BY USER: CHECK README.MD ----------------
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
+    ## ----------------------------------------------------------------------------------------
     html = requests.get(current_url, headers=headers)
     html = html.text
     soup = BeautifulSoup(html, "html.parser")
