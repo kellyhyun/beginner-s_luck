@@ -73,7 +73,7 @@ pip install kivy
 ### Miscellaneous
 While this isn't considered a package, IMDB database was downloaded to facilitate the filtering process of the code when searching for movies. This significantly reduces the runtime of the code as it reduces the amount of webscraping that needs to take place to gather all the necessary information. The csv file of the database can be found in the file labeled 'finalDatabase.csv.' More on how we created this database is in a later section of this ReadMe file.
 
-## How Our Code Works
+## How Our Code Works [Main_GUI_and_Helper_Files]
 
 ### Basics
 The most basic building block of our projects looks like this (all data based on iMDB).
@@ -103,8 +103,16 @@ Genre
 Crew
 Trailer Link
 ```
+### GUI Layout (main.kv)
+This is where the layout of our graphical user interface was defined. There is a window manager for all of the windows (screens). In each window, there are layouts. In each layout, there are widgets like buttons, toggle buttons, and labels. Many buttons and toggle buttons are binded to functions from the mainKivy.py here. 
+Note that the next buttons have if clauses to check if the user inputs were valid. 
 
-### Runtime Weighted the Most
+### GUI Python File (mainKivy.py)
+This is our Python file that import the other helper python files (finalSort.py and seleniumMain.py). We added the pop-up widgets here and all of our button functions are also here. 
+The save buttons are what change the userPreferences dictionary into what the user specifies. 
+Please look at the in-line comments for further information. 
+
+### Runtime Weighted the Most (finalSort.py)
 From now on, you'll always be able to satisfyingly finish a movie before you have to head out. The maximum runtime preferred will be set as a hard limit, so you'll definitely be able to finish the movie before you leave. 
 ```
 Otherwise:
@@ -115,7 +123,7 @@ Otherwise:
 If within the range, the weight is automatically at 5.
 We will run the top 1000 results from this weighting for the next part of our preference sorting.
 
-### Preference Sorting
+### Preference Sorting (finalSort.py)
 Generating movies for the user comes down to user's choice on what attribute he/she would prefer more. To establish such preferences, the schematic below shows how the code is structured:
 ```
 Setting precedence:
@@ -157,17 +165,15 @@ Weights are added together and sorted to list the movies best suited to the user
 ```    
 Once the precedence is set, the list of movies suggested should follow the structure above and output them in a correct order.
 
-### Webscraping
+### Webscraping (seleniumMain.py)
 Selenium main initialized what is needed to use the chromedriver, Selenium, and bs4.
 It then has a function that finds the link that the movie is using the tconst (a unique alphanumeric identifier for each title). This allows us to find the correct movie even if the titles of some movies are the same. 
 Then, it looks for the trailer link using Selenium. 
 
-## Creating our Database (creatingDatabase.py)
-
-### IMDB Databases
+## Creating our Database [Creating_Movie_Database]
 All information from our finalDatabase.csv are taken from IMDB datasets found here: https://datasets.imdbws.com/.
 The file creatingDatabase.py is separated into three sections because the IMDB datasets are large and difficult to work with all at once. 
-If running this file on your machine, be sure to change the file names of the datasets. 
+If running this creatingDatabase.py on your machine, be sure to change the file paths of the IMDB datasets to fit you machine. 
 ```
 First Section:
   title.basics.tsv.gz and title.ratings.tsv.gz from the IMDB datasets are used for this section.
@@ -200,7 +206,9 @@ Third Section:
 
 ```
 
-### Limitations and Future work
+## Understanding Selenium [Selenium_Test_and_Demos]
+
+## Limitations and Future work
 While the code allows for a few functionalities that generates numerous outputs, there are still areas for improvement. Some of the areas that can be improved are as follows:
 
 1. Implement a feature where trailer link generated can be clickable so that it can be directed to a webpage with the trailer loaded for viewing. Another method to approach this concept is to preload the trailer videos into the GUI, where the user has the option to directly click on the corresponding video to view. For this, another GUI should be used as Kivy does not work well natively with hyperlinks.
