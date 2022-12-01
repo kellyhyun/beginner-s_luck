@@ -70,7 +70,8 @@ Trailer link
 ```
 
 ### Runtime?
-From now on, you'll always be able to satisfyingly finish a movie before you have to head out. The maximum runtime preferred will be set as a hard limit, so you'll definitely be able to finish the movie before you leave.
+From now on, you'll always be able to satisfyingly finish a movie before you have to head out. The maximum runtime preferred will be set as a hard limit, so you'll definitely be able to finish the movie before you leave. 
+
 
 ### Preference Structuring
 Generating movies for the user comes down to user's choice on what attribute he/she would prefer more. To establish such preferences, the schematic below shows how the code is structured:
@@ -108,6 +109,9 @@ Else:
   Then
   Weight = 1 - ( abs(Movie_rating - Mean_rating) / 10 )
     Where, max difference allowed for movies in rating = 10. 
+    
+    
+Weights are added together and sorted to list the movies best suited to the user.
 ```    
 Once the precedence is set, the list of movies suggested should follow the structure above and output them in a correct order.
 
