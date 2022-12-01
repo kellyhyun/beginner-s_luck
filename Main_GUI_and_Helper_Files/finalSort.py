@@ -32,10 +32,10 @@ def sortTime (newdf, dictionaryPreferences):
     
     for index, row in newdf.iterrows():
         if mintime <= row["runtimeMinutes"] <= maxtime:
-            row["weight"] = 200
+            row["weight"] = 5
         else:
             average = (mintime + maxtime)/2
-            row["weight"] = (1 - (abs(row["runtimeMinutes"]-average)/422))*200
+            row["weight"] = (1 - (abs(row["runtimeMinutes"]-average)/422))*5
         newdf.loc[index,"weight"] = newdf.loc[index,"weight"] + row["weight"]
     return newdf
 

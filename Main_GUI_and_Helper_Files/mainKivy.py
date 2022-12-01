@@ -22,8 +22,8 @@ preferencesImportance = {1:"", 2:"", 3:"", "valid":False}
 Window.maximize()
 
 ##FOR TESTING PURPOSES##
-# dictionaryPreferences = {"valid": True, "maxtime": 150, "mintime":120, "genres":["Family", "Adventure"], "minyear":2015, "maxyear": 2022, "maxrating":8.5, "minrating":8.4}
-# preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":True}
+dictionaryPreferences = {"valid": True, "maxtime": 150, "mintime":120, "genres":["Family", "Adventure"], "minyear":2020, "maxyear": 2022, "maxrating":8.5, "minrating":8.4}
+preferencesImportance = {1:"Rating", 2:"Genres", 3:"Year", "valid":True}
 
 
 class MainWindow(Screen):
@@ -345,7 +345,7 @@ class FourthWindow(Screen):
             dictionary['pplcategories'] = row.category
             dictionary['pplnames'] = row.primaryName
             dictionary['votes'] = row.numVotes
-            dictionary['summary'], dictionary['trailer'] = seleniumMain.scrape_movie_info_imdb(row.primaryTitle)
+            dictionary['summary'], dictionary['trailer'] = seleniumMain.scrape_movie_info_imdb(row.tconst)
             listMovie.append(dictionary)
             print(dictionary)
         return listMovie
