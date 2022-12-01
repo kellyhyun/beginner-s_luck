@@ -171,7 +171,7 @@ It then has a function that finds the link that the movie is using the tconst (a
 Then, it looks for the trailer link using Selenium. 
 
 ## Creating our Database [Creating_Movie_Database]
-All information from our finalDatabase.csv are taken from IMDB datasets found here: https://datasets.imdbws.com/.
+All information from our finalDatabase.csv are taken from IMDB datasets found here: https://datasets.imdbws.com/. Since the database used in this program is local, note that it may not contain very recently released movies depending on when you created the database.
 The file creatingDatabase.py is separated into three sections because the IMDB datasets are large and difficult to work with all at once. 
 If running this creatingDatabase.py on your machine, be sure to change the file paths of the IMDB datasets to fit you machine. 
 ```
