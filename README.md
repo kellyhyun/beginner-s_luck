@@ -178,7 +178,8 @@ If running this creatingDatabase.py on your machine, be sure to change the file 
 First Section:
   title.basics.tsv.gz and title.ratings.tsv.gz from the IMDB datasets are used for this section.
   Create database with columns that are specific to each title. 
-  Here we filtered out titles that have super small runtimes, titles that are not movies, and titles with fewer than 10,000 votes because we did not want to include obsure movie titles. 
+  Here we filtered out titles that have super small runtimes, titles that are not movies, and titles with fewer than 10,000 votes 
+  because we did not want to include obsure movie titles. 
   
   The columns are as follows: 
     tconst - unique alphanumeric identifier [taken from title.basics and title.ratings]
@@ -191,14 +192,18 @@ First Section:
     numVotes - number of votes the title has recieved [taken from title.ratings]
 
 Second Section:
-  title.principals.tsv (connecting all names to titles), name.basics.tsv, and the database that were created in section 1 were used to create a database of what the crew in each movie did and their names. 
+  title.principals.tsv (connecting all names to titles), name.basics.tsv, and the database that were created in section 1 were used 
+  to create a database of what the crew in each movie did and their names. 
   This section creates a database that has the movie in as many rows as the number of people in the crew. 
 
 Third Section:
   The databases from sections 1 and 2 are used for this section.
-  We read db2.csv and drop some columns (such as birthYear, deathYear, job, etc.) because they are unneeded and will increase the speed this section. 
-  We then put the names and categories (roles) of the crew in a list, where the indexes still match between the two for all actors, actresses, and directions. These lists are put in their own databases and then merged with the database from section 1. 
-    For example, the director of Inception is Christopher Nolan, so his name is in the second index of the names list and 'director' is in the second index of the category list. 
+  We read db2.csv and drop some columns (such as birthYear, deathYear, job, etc.) because they are unneeded and will increase the 
+  speed this section. 
+  We then put the names and categories (roles) of the crew in a list, where the indexes still match between the two for all actors, 
+  actresses, and directions. These lists are put in their own databases and then merged with the database from section 1. 
+    For example, the director of Inception is Christopher Nolan, so his name is in the second index of the names list and 'director' 
+    is in the second index of the category list. 
  
  The columns added are as follows:
     names - list of the names of all the crew [taken from name.basics and title.principals]
