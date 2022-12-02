@@ -78,7 +78,8 @@ While this isn't considered a package, IMDB database was downloaded to facilitat
 ### Basics
 The most basic building block of our projects looks like this (all data based on iMDB).
 Note that these will be stored in dictionaries.
-Input:
+
+Input (User Preferences and User Priorities):
 
 User Preferences:
 ```
